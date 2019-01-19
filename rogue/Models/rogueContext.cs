@@ -450,6 +450,39 @@ namespace rogue.Models
                     .HasMaxLength(1024)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Entity<EffetItem>(entity =>
+            {
+                entity.HasKey(e => e.Iditem)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("EFFET_ITEM");
+
+                entity.Property(e => e.Iditem)
+                    .HasColumnName("ID_ITEM")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.AtkItem)
+                    .HasColumnName("ATK_ITEM");
+
+                entity.Property(e => e.SpeedItem)
+                    .HasColumnName("SPEED_ITEM");
+
+                entity.Property(e => e.HpItem)
+                    .HasColumnName("HP_ITEM");
+            });
+
+            modelBuilder.Entity<ValeurItem>(entity =>
+            {
+                entity.HasKey(e => e.IdItem)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("VALEUR");
+
+                entity.Property(e => e.valeurItem)
+                    .HasColumnName("MONTANT")
+                    .ValueGeneratedNever();
+            });
         }
     }
 }

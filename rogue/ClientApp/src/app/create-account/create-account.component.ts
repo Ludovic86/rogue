@@ -7,7 +7,7 @@ import { ErrorStateMatcher } from '@angular/material';
 
 export class RegistrationValidator {
   static validate(accountForm: FormGroup) {
-      let password = accountForm.controls.Password.value;
+      let password = accountForm.controls.MotDePasse.value;
       let repeatPassword = accountForm.controls.ConfirmPass.value;
 
       if (repeatPassword.length <= 0) {
@@ -33,8 +33,8 @@ export class RegistrationValidator {
 export class CreateAccountComponent implements OnInit {
 
   accountForm: FormGroup;
-  newPlayer: Joueur;
   Url: string = "";
+  AjoutResult: string = "";
   
   constructor(private http: HttpClient, 
     @Inject('BASE_URL') baseUrl: string, 
@@ -42,10 +42,10 @@ export class CreateAccountComponent implements OnInit {
     private router: Router) {
       this.Url = baseUrl;
       this.accountForm = this.formBuilder.group({
-        Id: [0],
-        Nom: ['', Validators.required],
+        IdJoueur: [0],
+        NomJoueur: ['', Validators.required],
         Email: ['', [Validators.required, Validators.email]],
-        Password: ['', [Validators.required, Validators.minLength(6)]],
+        MotDePasse: ['', [Validators.required, Validators.minLength(6)]],
         ConfirmPass: ['', [Validators.required]]
      }, {
        validator: RegistrationValidator.validate.bind(this)
@@ -65,10 +65,25 @@ export class CreateAccountComponent implements OnInit {
   onSubmitForm(){
     const formValue = this.accountForm.value;
     const newPlayer = new Joueur(
-      formValue["Id"],
-      formValue["Nom"],
       formValue["Email"],
-      formValue["Password"]);
+      formValue["MotDePasse"],
+      formValue["NomJoueur"]
+    )
+    debugger;
+      this.http.post(this.Url + "api/Joueur/AjouterJoueur", newPlayer, {responseType: 'text'}).subscribe(
+        result => {
+          this.AjoutResult = result;
+          console.log(this.AjoutResult);
+          if (this.AjoutResult == "existe"){
+            debugger;
+            alert("Il existe déjà un compte enregistré avec cet E-mail")
+          }
+          else if (this.AjoutResult == "ok"){
+            alert("Le compte a été enregistré avec succés")
+            this.router.navigate(['/'])
+          }
+        }, error => console.log(error)
+      );
   }
 
 }

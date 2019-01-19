@@ -5,10 +5,10 @@
 <div class="col-md-6">
   <form [formGroup]="accountForm" (ngSubmit)="onSubmitForm()">
     <div class="form-group">
-      <label for="Nom">Nom*</label>
-      <input class="form-control" type="text" name="Nom" formControlName="Nom" placeholder="Max: 10 char" maxlength="10"/>
+      <label for="NomJoueur">Nom*</label>
+      <input class="form-control" type="text" name="NomJoueur" formControlName="NomJoueur" placeholder="Max: 10 char" maxlength="10"/>
     </div>
-    <p class="bg-danger" *ngIf="accountForm.controls.Nom.errors?.required && accountForm.controls.Nom.touched">Un nom est requis</p>
+    <p class="bg-danger" *ngIf="accountForm.controls.NomJoueur.errors?.required && accountForm.controls.NomJoueur.touched">Un nom est requis</p>
     
     <div class="form-group">
         <label for="Email">E-mail*</label>
@@ -17,11 +17,11 @@
       <p class="bg-danger" *ngIf="accountForm.controls.Email.errors?.required && accountForm.controls.Email.touched">L'adresse E-mail est requise</p>
       <p class="bg-danger" *ngIf="accountForm.controls.Email.errors?.email">Merci de renseigner une adresse E-mail valide</p>
     <div class="form-group">
-        <label for="Password">Mot de passe*</label>
-        <input class="form-control" type="password" name="Password" formControlName="Password" minlength="6" placeholder="Min: 6 char"/>
+        <label for="MotDePasse">Mot de passe*</label>
+        <input class="form-control" type="password" name="MotDePasse" formControlName="MotDePasse" minlength="6" placeholder="Min: 6 char"/>
       </div>
-      <p class="bg-danger" *ngIf="accountForm.controls.Password.errors?.required && accountForm.controls.Password.touched">Merci de choisir un mot de passe</p>
-      <p class="bg-danger" *ngIf="accountForm.controls.Password.errors?.minlength">Votre mot de passe dois comporter au moins 6 caratères</p>
+      <p class="bg-danger" *ngIf="accountForm.controls.MotDePasse.errors?.required && accountForm.controls.MotDePasse.touched">Merci de choisir un mot de passe</p>
+      <p class="bg-danger" *ngIf="accountForm.controls.MotDePasse.errors?.minlength">Votre mot de passe dois comporter au moins 6 caratères</p>
       <div class="form-group">
         <label for="ConfirmPass">Confirmation du mot de passe*</label>
         <input class="form-control" type="password" name="ConfirmPass" formControlName="ConfirmPass"/>

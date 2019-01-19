@@ -1,8 +1,9 @@
 export class Joueur {
-    constructor(
-        public Id: number = 0, 
-        public Nom: string, 
+    
+    constructor( 
         public Email: string,
-        public Password: string
+        public MotDePasse: string,
+        public NomJoueur: string = '',
+        public IdJoueur: number = 0,
         ) {}
   }

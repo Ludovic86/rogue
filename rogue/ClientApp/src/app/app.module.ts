@@ -13,6 +13,8 @@ import { MatProgressSpinnerModule, MatIconModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,10 +40,11 @@ import { CreateAccountComponent } from './create-account/create-account.componen
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'create-account', component: CreateAccountComponent},
+      { path: 'create-account', component: CreateAccountComponent },
+      { path: 'login', component: LoginComponent }
     ])
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
