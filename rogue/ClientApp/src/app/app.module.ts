@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +43,7 @@ import { AuthService } from './services/auth.service';
       { path: 'login', component: LoginComponent }
     ])
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

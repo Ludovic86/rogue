@@ -10,5 +10,6 @@ namespace rogue.Models
         Joueur TrouverJoueurParEmail(Joueur joueur);
         void AjouterJoueurDb(Joueur joueur);
         bool AuthentifierJoueur(Joueur joueur);
+        Joueur TrouverJoueurParStringEmail(string email);
     }
 }

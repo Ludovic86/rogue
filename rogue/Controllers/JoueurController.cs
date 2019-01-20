@@ -37,6 +37,18 @@ namespace rogue.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/Joueur/AuthCheck")]
+        public string AuthCheck()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var loggedJoueur = dal.TrouverJoueurParStringEmail(HttpContext.User.Identity.Name);
+                return loggedJoueur.Email;
+            }
+            return null;
+        }
+
         [HttpPost]
         [Route("api/Joueur/Authentification")]
         public async Task<string> Authentification([FromBody] Joueur joueur)
@@ -51,9 +63,9 @@ namespace rogue.Controllers
                 var joueurOk = dal.TrouverJoueurParEmail(joueur);
                 var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, joueurOk.NomJoueur),
-                        new Claim("Nom Joueur", joueurOk.NomJoueur),
-                        new Claim(ClaimTypes.Email, joueurOk.Email),
+                        new Claim(ClaimTypes.Name, joueurOk.Email)
+                        //new Claim("Nom Joueur", joueurOk.NomJoueur),
+                        //new Claim(ClaimTypes.Email, joueurOk.Email),
                     };
                 var claimsIdendity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

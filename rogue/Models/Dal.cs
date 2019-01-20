@@ -32,6 +32,12 @@ namespace rogue.Models
             return null;
         }
 
+        public Joueur TrouverJoueurParStringEmail(string email)
+        {
+            var joueurTrouve = bdd.Joueur.Where(j => j.Email == email).FirstOrDefault();
+            return joueurTrouve;
+        }
+
         public bool AuthentifierJoueur(Joueur joueur)
         {
             var joueurTrouve = bdd.Joueur.Where(j => j.Email == joueur.Email && j.MotDePasse == this.Encode(joueur.MotDePasse)).FirstOrDefault();
