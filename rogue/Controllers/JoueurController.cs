@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using rogue.Models;
+using rogue.ViewModels;
 
 namespace rogue.Controllers
 {
@@ -39,12 +40,25 @@ namespace rogue.Controllers
 
         [HttpGet]
         [Route("api/Joueur/AuthCheck")]
-        public string AuthCheck()
+        public bool AuthCheck()
+        {
+
+            bool auth  = HttpContext.User.Identity.IsAuthenticated;
+            return auth;
+        }
+        [HttpGet]
+        [Route("api/Joueur/LoggedJoueur")]
+        public JoueurVM LoggedJoueur()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 var loggedJoueur = dal.TrouverJoueurParStringEmail(HttpContext.User.Identity.Name);
-                return loggedJoueur.Email;
+                var joueurVM = new JoueurVM()
+                {
+                    Nom = loggedJoueur.NomJoueur,
+                    Email = loggedJoueur.Email
+                };
+                return joueurVM;
             }
             return null;
         }

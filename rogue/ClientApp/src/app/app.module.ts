@@ -9,11 +9,12 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { MatInputModule } from '@angular/material/input';
 import { CounterComponent } from './counter/counter.component';
-import { MatProgressSpinnerModule, MatIconModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatIconModule, MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { LoginComponent } from './login/login.component';
     MatIconModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -43,7 +45,7 @@ import { LoginComponent } from './login/login.component';
       { path: 'login', component: LoginComponent }
     ])
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

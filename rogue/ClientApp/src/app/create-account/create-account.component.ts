@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validator, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { Joueur } from '../Models/Joueur.model';
+import { Joueur } from '../models/joueur.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ErrorStateMatcher } from '@angular/material';

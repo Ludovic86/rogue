@@ -1,12 +1,12 @@
 <h1>Connexion</h1>
-
-<p *ngIf="isAuth"><em>Vous êtes déjà connecté</em> <br /> <button class="btn btn-danger" (click)="unLog()">
+<mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerStyle"></mat-spinner>
+<p *ngIf="isAuth && isReady"><em>Vous êtes déjà connecté avec le compte {{loggedJoueur.email}}</em> <br /> <button class="btn btn-danger" (click)="unLog()">
   Se déconnecter
 </button> </p>
 
 <p *ngIf="joueurNotFound"><em style="color: red">Email ou mot de passe incorrect !</em></p>
 
-<div *ngIf="!isAuth">
+<div *ngIf="!isAuth && isReady">
   <form [formGroup]="joueurForm" (ngSubmit)="onSubmitForm()">
     <div class="form-group">
       <label for="Email">Email</label>
