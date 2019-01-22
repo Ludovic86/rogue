@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   isReady: boolean = false;
   responseString: string;
   joueurNotFound: boolean = false;
-  loggedJoueur: JoueurVm;
+  loggedJoueur: JoueurVm = {nom: "", email: ""};
   joueurSubscirption: Subscription;
   AuthSubsription: Subscription;
 
@@ -42,14 +42,17 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     this.init();
-    this.isReady = true;
   }
 
   init(){
     this.authService.authSubject.subscribe(
       (auth: boolean) =>{
         this.isAuth = auth;
+        if (this.isAuth != undefined){
+          this.isReady = true;
+        }
       }
     );
     this.authService.authCheck();
@@ -63,45 +66,26 @@ export class LoginComponent implements OnInit {
     this.authService.loggedJoueur();
   }
 
-  // onSubmitForm() {
-  //   const formValue = this.joueurForm.value;
-  //   console.log(formValue);
-  //   var joueur = new Joueur(
-  //     formValue['Email'],
-  //     formValue['MotDePasse']);
-  //   this.http.post(this.Url + "api/Joueur/Authentification", joueur, {responseType: 'text'}).subscribe(result => {
-  //     this.responseString = result;
-  //     if (this.responseString == 'ok') {
-  //       //this.authService.isAuth = true;
-  //       alert("Compte authentifié avec succés")
-  //       this.router.navigate(['/']);
-  //     }
-  //     this.joueurNotFound = true;
-  //   }, error => console.log(error));
-  //   return;
-  // }
-
   onSubmitForm() {
+    this.isReady = false;
     this.authService.authResponseSubject.subscribe(
       (authRes: string) =>{
         if (authRes == "notOk"){
+          this.isReady = true;
           this.joueurNotFound = true;
           return
+        } 
+        else{
+          this.snackBar.open("Compte authentifié avec succés", "Info", {
+            duration: 2000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+          this.router.navigate(['/']);
         }
       }
     );
     this.authService.authJoueur(this.joueurForm);
-    // console.log(this.responseString);
-    // if (this.responseString == "notOk"){
-    //   debugger;
-    //   this.joueurNotFound = true;
-    //   debugger;
-    //   return;
-    // }
-    this.snackBar.open(this.responseString, "", {
-      duration: 2000,
-    });
-    //this.router.navigate(['/']);
   }
 
   unLog(){

@@ -1,4 +1,4 @@
 export interface JoueurVm{
-    Nom: string;
-    Email:string;
+    nom: string;
+    email:string;
 }
