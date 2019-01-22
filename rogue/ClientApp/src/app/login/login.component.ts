@@ -14,11 +14,8 @@ import { MatDialog, MatSnackBar } from '@angular/material';
   styleUrls: ['./login.component.css']
 })
 
-
-
 export class LoginComponent implements OnInit {
 
-  Url: string = "";
   joueurForm: FormGroup;
   isAuth: boolean;
   isReady: boolean = false;
@@ -28,13 +25,10 @@ export class LoginComponent implements OnInit {
   joueurSubscirption: Subscription;
   AuthSubsription: Subscription;
 
-  constructor(private http: HttpClient, 
-              private formBuilder: FormBuilder, 
-              private route: ActivatedRoute, 
+  constructor(private formBuilder: FormBuilder, 
               private router: Router, @Inject('BASE_URL') baseUrl: string,
               private authService: AuthService,
               public snackBar: MatSnackBar) {
-    this.Url = baseUrl;
     this.joueurForm = this.formBuilder.group({
       Email: ['', Validators.required],
       MotDePasse: ['', Validators.required]
@@ -89,8 +83,7 @@ export class LoginComponent implements OnInit {
   }
 
   unLog(){
-    this.http.get(this.Url + "api/Joueur/Unlog").subscribe(result =>{
-    }, error => console.log(error));
+    this.authService.unLog();
     this.isAuth = false;
     this.router.navigate(['/']);
   }

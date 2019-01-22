@@ -37,11 +37,11 @@ namespace rogue.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-AOQC1MB;User ID=ludo;Password=azerty;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            }
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer("Data Source=DESKTOP-AOQC1MB;User ID=ludo;Password=azerty;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+//            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -375,6 +375,9 @@ namespace rogue.Models
                 entity.Property(e => e.IdPartie)
                     .HasColumnName("ID_PARTIE")
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.EnCours)
+                    .HasColumnName("EN_CROURS");
             });
 
             modelBuilder.Entity<Personnage>(entity =>

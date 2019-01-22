@@ -66,6 +66,11 @@ export class AuthService{
           this.authResponse = result;
             this.emitAuthResponseSubject();
         }, error => console.log(error));
+    }
+
+    unLog(){
+        this.http.get(this.Url + "api/Joueur/Unlog").subscribe(result =>{
+        }, error => console.log(error));
       }
 
 }

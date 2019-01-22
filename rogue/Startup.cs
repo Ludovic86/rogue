@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using rogue.Models;
+using System.IO;
 
 namespace rogue
 {
@@ -29,11 +31,13 @@ namespace rogue
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            var connection = @"Data Source=DESKTOP-AOQC1MB;Initial Catalog=rogue;User ID=ludo;Password=azerty;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            var config = configurationBuilder.Build();
+            var connection = config.GetConnectionString("default");
             services.AddDbContext<rogueContext>
                 (options => options.UseSqlServer(connection));
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 

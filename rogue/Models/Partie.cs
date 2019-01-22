@@ -14,6 +14,7 @@ namespace rogue.Models
         }
 
         public int IdPartie { get; set; }
+        public bool EnCours { get; set; }
 
         public ICollection<GagnerObjet> GagnerObjet { get; set; }
         public ICollection<HistoEnnemi> HistoEnnemi { get; set; }
