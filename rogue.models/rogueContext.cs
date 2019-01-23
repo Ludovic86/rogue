@@ -1,9 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using rogue.models;
 
-namespace rogue.Models
+namespace rogue.models
 {
     public partial class rogueContext : DbContext
     {

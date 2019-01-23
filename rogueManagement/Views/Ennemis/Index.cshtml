@@ -1,0 +1,58 @@
+﻿@model IEnumerable<rogue.models.Ennemi>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomEnemi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AtkEnnemi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpeedEnnemi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PvEnnemi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Isboss)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomEnemi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AtkEnnemi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpeedEnnemi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PvEnnemi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Isboss)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdEnnemi }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdEnnemi }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdEnnemi })
+        </td>
+    </tr>
+}
+
+</table>

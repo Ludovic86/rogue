@@ -1,0 +1,67 @@
+﻿@model rogue.models.Personnage
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Personnage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomPersonnage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomPersonnage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Classe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Classe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpeedPerso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpeedPerso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HpPeso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HpPeso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionPerso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionPerso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AtkPerso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AtkPerso)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPersonnage }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

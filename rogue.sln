@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rogue", "rogue\rogue.csproj", "{C84B05A7-663E-4280-8840-C743A2CA638A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rogueManagement", "rogueManagement\rogueManagement.csproj", "{EF0599F6-A3AE-48E9-8BEB-42FB014D82E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rogue.management", "rogueManagement\rogue.management.csproj", "{EF0599F6-A3AE-48E9-8BEB-42FB014D82E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rogue.models", "rogue.models\rogue.models.csproj", "{5854F14C-4BFD-4919-B6AD-3DB542F51DBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EF0599F6-A3AE-48E9-8BEB-42FB014D82E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF0599F6-A3AE-48E9-8BEB-42FB014D82E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF0599F6-A3AE-48E9-8BEB-42FB014D82E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5854F14C-4BFD-4919-B6AD-3DB542F51DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5854F14C-4BFD-4919-B6AD-3DB542F51DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5854F14C-4BFD-4919-B6AD-3DB542F51DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5854F14C-4BFD-4919-B6AD-3DB542F51DBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

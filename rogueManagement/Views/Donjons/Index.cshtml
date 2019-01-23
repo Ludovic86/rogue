@@ -1,0 +1,40 @@
+﻿@model IEnumerable<rogue.models.Donjon>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomDonjon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageDonjon)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomDonjon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageDonjon)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdDonjon }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdDonjon }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdDonjon })
+        </td>
+    </tr>
+}
+
+</table>

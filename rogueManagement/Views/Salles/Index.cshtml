@@ -1,0 +1,46 @@
+﻿@model IEnumerable<rogue.models.Salle>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomSalle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeSalle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TexteSalle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomSalle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeSalle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TexteSalle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdSalle }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdSalle }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdSalle })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,43 @@
+﻿@model rogue.models.EffetItem
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EffetItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AtkItem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AtkItem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpeedItem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpeedItem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HpItem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HpItem)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Iditem }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

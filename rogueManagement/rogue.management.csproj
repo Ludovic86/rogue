@@ -45,12 +45,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=2.2.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.2.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.2.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.2.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=2.2.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.2.2.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
@@ -99,6 +111,9 @@
       <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlClient, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.6.0\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -190,7 +205,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BddContext.cs" />
+    <Compile Include="Controllers\DonjonsController.cs" />
+    <Compile Include="Controllers\EffetItemsController.cs" />
+    <Compile Include="Controllers\EnnemisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\PersonnagesController.cs" />
+    <Compile Include="Controllers\SallesController.cs" />
+    <Compile Include="Controllers\TypeItemsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,6 +255,41 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Ennemis\Create.cshtml" />
+    <Content Include="Views\Ennemis\Delete.cshtml" />
+    <Content Include="Views\Ennemis\Details.cshtml" />
+    <Content Include="Views\Ennemis\Edit.cshtml" />
+    <Content Include="Views\Ennemis\Index.cshtml" />
+    <Content Include="Views\Personnages\Create.cshtml" />
+    <Content Include="Views\Personnages\Delete.cshtml" />
+    <Content Include="Views\Personnages\Details.cshtml" />
+    <Content Include="Views\Personnages\Edit.cshtml" />
+    <Content Include="Views\Personnages\Index.cshtml" />
+    <Content Include="Views\Salles\Create.cshtml" />
+    <Content Include="Views\Salles\Delete.cshtml" />
+    <Content Include="Views\Salles\Details.cshtml" />
+    <Content Include="Views\Salles\Edit.cshtml" />
+    <Content Include="Views\Salles\Index.cshtml" />
+    <Content Include="Views\Donjons\Create.cshtml" />
+    <Content Include="Views\Donjons\Delete.cshtml" />
+    <Content Include="Views\Donjons\Details.cshtml" />
+    <Content Include="Views\Donjons\Edit.cshtml" />
+    <Content Include="Views\Donjons\Index.cshtml" />
+    <Content Include="Views\EffetItems\Create.cshtml" />
+    <Content Include="Views\EffetItems\Delete.cshtml" />
+    <Content Include="Views\EffetItems\Details.cshtml" />
+    <Content Include="Views\EffetItems\Edit.cshtml" />
+    <Content Include="Views\EffetItems\Index.cshtml" />
+    <Content Include="Views\TypeItems\Create.cshtml" />
+    <Content Include="Views\TypeItems\Delete.cshtml" />
+    <Content Include="Views\TypeItems\Details.cshtml" />
+    <Content Include="Views\TypeItems\Edit.cshtml" />
+    <Content Include="Views\TypeItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -248,6 +306,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\rogue.models\rogue.models.csproj">
+      <Project>{5854f14c-4bfd-4919-b6ad-3db542f51dbf}</Project>
+      <Name>rogue.models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

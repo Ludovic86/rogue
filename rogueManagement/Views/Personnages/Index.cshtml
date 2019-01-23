@@ -1,0 +1,64 @@
+﻿@model IEnumerable<rogue.models.Personnage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomPersonnage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Classe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpeedPerso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HpPeso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescriptionPerso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AtkPerso)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomPersonnage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Classe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpeedPerso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HpPeso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DescriptionPerso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AtkPerso)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPersonnage }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdPersonnage }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPersonnage })
+        </td>
+    </tr>
+}
+
+</table>

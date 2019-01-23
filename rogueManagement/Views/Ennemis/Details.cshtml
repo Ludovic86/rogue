@@ -1,0 +1,59 @@
+﻿@model rogue.models.Ennemi
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ennemi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomEnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomEnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AtkEnnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AtkEnnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpeedEnnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpeedEnnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PvEnnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PvEnnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Isboss)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Isboss)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdEnnemi }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

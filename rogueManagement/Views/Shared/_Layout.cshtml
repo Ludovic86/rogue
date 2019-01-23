@@ -16,13 +16,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Rogue Management Tool", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Items", "Index", "Items")</li>
+                    <li>@Html.ActionLink("Items", "Index", "EffetItems")</li>
+                    <li>@Html.ActionLink("Items", "Index", "TypeItems")</li>
+                    <li>@Html.ActionLink("Items", "Index", "Ennemis")</li>
+                    <li>@Html.ActionLink("Items", "Index", "Personnages")</li>
+                    <li>@Html.ActionLink("Items", "Index", "Salles")</li>
+                    <li>@Html.ActionLink("Items", "Index", "Donjons")</li>
                 </ul>
             </div>
         </div>

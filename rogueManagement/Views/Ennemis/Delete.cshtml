@@ -1,0 +1,65 @@
+﻿@model rogue.models.Ennemi
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Ennemi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomEnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomEnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AtkEnnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AtkEnnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpeedEnnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpeedEnnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PvEnnemi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PvEnnemi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Isboss)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Isboss)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
