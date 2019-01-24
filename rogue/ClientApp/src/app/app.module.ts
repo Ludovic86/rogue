@@ -15,6 +15,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthService } from './services/auth.service';
     CounterComponent,
     FetchDataComponent,
     CreateAccountComponent,
-    LoginComponent
+    LoginComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,7 +42,7 @@ import { AuthService } from './services/auth.service';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'game', component: GameComponent },
       { path: 'create-account', component: CreateAccountComponent },
       { path: 'login', component: LoginComponent }
     ])

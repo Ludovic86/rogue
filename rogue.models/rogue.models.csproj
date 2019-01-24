@@ -132,6 +132,7 @@
     <Compile Include="Joueur.cs" />
     <Compile Include="Participe.cs" />
     <Compile Include="Partie.cs" />
+    <Compile Include="PartieVM.cs" />
     <Compile Include="Personnage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="rogueContext.cs" />

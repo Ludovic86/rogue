@@ -339,6 +339,12 @@ namespace rogue.models
 
                 entity.Property(e => e.IdPartie).HasColumnName("ID_PARTIE");
 
+                entity.Property(e => e.HpLeft).HasColumnName("HP_LEFT");
+
+                entity.Property(e => e.NbreSalle).HasColumnName("NOMBRE_SALLE");
+
+                entity.Property(e => e.EnCours).HasColumnName("EN_COURS");
+
                 entity.HasOne(d => d.IdDonjonNavigation)
                     .WithMany(p => p.Participe)
                     .HasForeignKey(d => d.IdDonjon)
@@ -376,7 +382,8 @@ namespace rogue.models
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.EnCours)
-                    .HasColumnName("EN_CROURS");
+                    .HasColumnName("EN_COURS");
+
             });
 
             modelBuilder.Entity<Personnage>(entity =>

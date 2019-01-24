@@ -56,6 +56,27 @@ namespace rogue.models
             bdd.SaveChanges();
         }
 
+        public PartieVM ConstructPartie(Participe partie)
+        {
+            List<Item> items = new List<Item>();
+            var donjon = bdd.Donjon.Where(d => d.IdDonjon == partie.IdDonjon).First();
+            var perso = bdd.Personnage.Where(p => p.IdPersonnage == partie.IdPersonnage).First();
+            var inventaire = bdd.GagnerObjet.Where(i => i.IdPartie == partie.IdPartie).ToList();
+            foreach (var item in inventaire)
+            {
+                items.Add(bdd.Item.Where(i => i.IdItem == item.IdItem).FirstOrDefault());
+            }
+            var partieBuilt = new PartieVM()
+            {
+                NomDonjon = donjon.NomDonjon,
+                NomPersonnage = perso.NomPersonnage,
+                HpLeft = partie.HpLeft,
+                Inventaire = items.ToArray(),
+                NbrSalle = partie.NbreSalle
+            };
+            return partieBuilt;
+        }
+
         public void Dispose()
         {
             bdd.Dispose();

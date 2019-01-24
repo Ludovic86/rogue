@@ -11,5 +11,6 @@ namespace rogue.models
         void AjouterJoueurDb(Joueur joueur);
         bool AuthentifierJoueur(Joueur joueur);
         Joueur TrouverJoueurParStringEmail(string email);
+        PartieVM ConstructPartie(Participe partie);
     }
 }

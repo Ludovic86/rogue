@@ -1,0 +1,5 @@
+<mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerVerticalCenter"></mat-spinner>
+<div *ngIf="isReady && !loggedJoueur">Vous devez être connecté pour faire une partie <a [routerLink]='["/login"]'>Se connecter</a></div>
+
+
+
