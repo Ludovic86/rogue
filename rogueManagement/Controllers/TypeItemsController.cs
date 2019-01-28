@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class TypeItemsController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: TypeItems
         public ActionResult Index()

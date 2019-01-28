@@ -12,5 +12,14 @@ namespace rogue.models
         bool AuthentifierJoueur(Joueur joueur);
         Joueur TrouverJoueurParStringEmail(string email);
         PartieVM ConstructPartie(Participe partie);
+        IEnumerable<Personnage> GetPersoFromDb();
+        IEnumerable<Donjon> GetDonjonsFromDb();
+        IEnumerable<Participe> TrouverParticipationParId(int id);
+        void TerminePartie(string email);
+        IEnumerable<Salle> GetSalles();
+        IEnumerable<Item> GetItems();
+        IEnumerable<Ennemi> GetEnnemis();
+
+
     }
 }

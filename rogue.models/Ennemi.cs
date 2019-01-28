@@ -12,7 +12,7 @@ namespace rogue.models
         }
         [Key]
         public int IdEnnemi { get; set; }
-        public string NomEnemi { get; set; }
+        public string NomEnnemi { get; set; }
         public int? AtkEnnemi { get; set; }
         public int? SpeedEnnemi { get; set; }
         public int? PvEnnemi { get; set; }

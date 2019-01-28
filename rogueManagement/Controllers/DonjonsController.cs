@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class DonjonsController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: Donjons
         public ActionResult Index()
@@ -48,7 +48,7 @@ namespace rogueManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdDonjon,NomDonjon,ImageDonjon")] Donjon donjon)
+        public ActionResult Create([Bind(Include = "IdDonjon,NomDonjon,DecriptionDonjon")] Donjon donjon)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace rogueManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdDonjon,NomDonjon,ImageDonjon")] Donjon donjon)
+        public ActionResult Edit([Bind(Include = "IdDonjon,NomDonjon,DescriptionDonjon")] Donjon donjon)
         {
             if (ModelState.IsValid)
             {

@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class PersonnagesController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: Personnages
         public ActionResult Index()

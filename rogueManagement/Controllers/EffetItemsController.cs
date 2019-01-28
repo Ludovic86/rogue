@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class EffetItemsController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: EffetItems
         public ActionResult Index()

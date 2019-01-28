@@ -1,6 +1,3 @@
-<div class="row col-md-3 col-md-offset-5">
-  <h1>Connexion</h1>
-</div>
 <mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerVerticalCenter"></mat-spinner>
 
 <div class="row col-md-5 col-md-offset-4" style="margin-top: 50px">
@@ -10,9 +7,10 @@
 </div>
 
 
-<p *ngIf="joueurNotFound"><em style="color: red">Email ou mot de passe incorrect !</em></p>
-
 <div *ngIf="!isAuth && isReady && !loggedJoueur" class="col-md-4 col-md-offset-4 formVerticalCenter">
+    <alert *ngIf="joueurNotFound" type="danger">
+        <strong>Erreur</strong> Email ou mot de passe incorrect
+      </alert>
   <form [formGroup]="joueurForm" (ngSubmit)="onSubmitForm()">
     <div class="form-group">
       <label for="Email">Email</label>
@@ -25,3 +23,15 @@
     <button class="btn btn-primary" type="submit" [disabled]="joueurForm.invalid">Soumettre</button>
   </form>
 </div>
+
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Info</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Compte authentifié avec succès.
+    </div>
+  </ng-template>

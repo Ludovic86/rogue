@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using rogue.models;
+using rogue.ViewModels;
 
 namespace rogue.Controllers
 {
@@ -19,13 +20,13 @@ namespace rogue.Controllers
             dal = new Dal(bdd);
         }
 
-        [HttpGet]
-        [Route("api/Game/GetCurrentPartie")]
-        public PartieVM GetCurrentPartie(string email)
+        [HttpPost]
+        [Route("api/Game/GetCurrentPartie/")]
+        public PartieVM GetCurrentPartie([FromBody]JoueurVM joueur)
         {
             var partieVM = new PartieVM();
-            var joueur = dal.TrouverJoueurParStringEmail(email);
-            var participation = bdd.Participe.Where(p => p.IdJoueur == joueur.IdJoueur);
+            var joueurTrouve = dal.TrouverJoueurParStringEmail(joueur.Email);
+            var participation = bdd.Participe.Where(p => p.IdJoueur == joueurTrouve.IdJoueur);
 
             if (participation.Any())
             {
@@ -39,6 +40,41 @@ namespace rogue.Controllers
                 }
             }
             return null;
+        }
+
+        [HttpGet]
+        [Route("api/Game/CreateNewGame")]
+        public Game CreateNewGame()
+        {
+            return new Game()
+            {
+                Salles = dal.GetSalles(),
+                Objets = dal.GetItems(),
+                Ennemis = dal.GetEnnemis()
+            };
+        }
+
+        [HttpPost]
+        [Route("api/Game/TerminerPartie")]
+        public void TerminerPartie([FromBody] JoueurVM joueur)
+        {
+            dal.TerminePartie(joueur.Email);
+        }
+
+        [HttpGet]
+        [Route("api/Game/GetPersonnages")]
+        public IEnumerable<Personnage> GetPersonnages()
+        {
+            var personnages = dal.GetPersoFromDb();
+            return personnages;
+        }
+
+        [HttpGet]
+        [Route("api/Game/GetDonjons")]
+        public IEnumerable<Donjon> GetDonjons()
+        {
+            var donjons = dal.GetDonjonsFromDb();
+            return donjons;
         }
     }
 }

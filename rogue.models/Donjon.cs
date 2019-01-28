@@ -15,6 +15,7 @@ namespace rogue.models
         public int IdDonjon { get; set; }
         public string NomDonjon { get; set; }
         public byte[] ImageDonjon { get; set; }
+        public string DescriptionDonjon { get; set; }
 
         public ICollection<Appartient> Appartient { get; set; }
         public ICollection<Participe> Participe { get; set; }

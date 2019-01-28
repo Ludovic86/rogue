@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class ItemsController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: Items
         public ActionResult Index()
@@ -48,10 +48,11 @@ namespace rogueManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdItem,NomItem")] Item item)
+        public ActionResult Create([Bind(Include = "IdItem,NomItem,AtkItem,SpeedItem,HpItem,Description")] Item item)
         {
             if (ModelState.IsValid)
             {
+                item.IdItem = db.Item.Count() + 1;
                 db.Item.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -80,7 +81,7 @@ namespace rogueManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdItem,NomItem")] Item item)
+        public ActionResult Edit([Bind(Include = "IdItem,NomItem,AtkItem,SpeedItem,HpItem,Description")] Item item)
         {
             if (ModelState.IsValid)
             {

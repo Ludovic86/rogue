@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace rogue.models
 {
@@ -13,7 +14,7 @@ namespace rogue.models
             HistoEnnemi = new HashSet<HistoEnnemi>();
             Historique = new HashSet<Historique>();
         }
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdSalle { get; set; }
         public string NomSalle { get; set; }
         public int? TypeSalle { get; set; }

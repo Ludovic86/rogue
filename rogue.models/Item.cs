@@ -19,6 +19,12 @@ namespace rogue.models
         [Column("NOM_ITEM")]
         public string NomItem { get; set; }
 
+        public string Description { get; set; }
+
+        public int AtkItem { get; set; }
+        public int SpeedItem { get; set; }
+        public int HpItem { get; set; }
+
         public ICollection<Appartient> Appartient { get; set; }
         public ICollection<EstDe> EstDe { get; set; }
     }

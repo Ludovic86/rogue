@@ -15,7 +15,7 @@ namespace rogue.models
         public string NomPersonnage { get; set; }
         public string Classe { get; set; }
         public int? SpeedPerso { get; set; }
-        public int? HpPeso { get; set; }
+        public int? HpPerso { get; set; }
         public string DescriptionPerso { get; set; }
         public int? AtkPerso { get; set; }
 

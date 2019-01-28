@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace rogue.models
@@ -36,11 +37,10 @@ namespace rogue.models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Data Source=DESKTOP-AOQC1MB;User ID=ludo;Password=azerty;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-//            }
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["BddContext"].ConnectionString);      
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace rogue.models
                     .HasColumnName("IMAGE_DONJON")
                     .HasColumnType("image");
 
+                entity.Property(e => e.DescriptionDonjon)
+                    .HasColumnName("DESCRIPTION_DONJON");
+
                 entity.Property(e => e.NomDonjon)
                     .HasColumnName("NOM_DONJON")
                     .HasMaxLength(1024)
@@ -125,8 +128,8 @@ namespace rogue.models
 
                 entity.Property(e => e.Isboss).HasColumnName("ISBOSS");
 
-                entity.Property(e => e.NomEnemi)
-                    .HasColumnName("NOM_ENEMI")
+                entity.Property(e => e.NomEnnemi)
+                    .HasColumnName("NOM_ENNEMI")
                     .HasMaxLength(1024)
                     .IsUnicode(false);
 
@@ -284,6 +287,18 @@ namespace rogue.models
                     .HasColumnName("NOM_ITEM")
                     .HasMaxLength(1024)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.AtkItem)
+                    .HasColumnName("ATK_ITEM");
+
+                entity.Property(e => e.SpeedItem)
+                    .HasColumnName("SPEED_ITEM");
+
+                entity.Property(e => e.HpItem)
+                    .HasColumnName("HP_ITEM");
             });
 
             modelBuilder.Entity<Joueur>(entity =>
@@ -409,7 +424,7 @@ namespace rogue.models
                     .HasMaxLength(1024)
                     .IsUnicode(false);
 
-                entity.Property(e => e.HpPeso).HasColumnName("HP_PESO");
+                entity.Property(e => e.HpPerso).HasColumnName("HP_PERSO");
 
                 entity.Property(e => e.NomPersonnage)
                     .HasColumnName("NOM_PERSONNAGE")

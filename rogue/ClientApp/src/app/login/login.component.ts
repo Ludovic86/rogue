@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { AuthService } from '../services/auth.service';
 import { JoueurVm } from '../models/joueurvm.model';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal/';
+import { template } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-login',
@@ -24,11 +26,13 @@ export class LoginComponent implements OnInit {
   loggedJoueur: JoueurVm = {nom: "", email: ""};
   joueurSubscirption: Subscription;
   AuthSubsription: Subscription;
+  modalRef: BsModalRef;
+  @ViewChild('template') template: TemplateRef<any>;
 
   constructor(private formBuilder: FormBuilder, 
               private router: Router, @Inject('BASE_URL') baseUrl: string,
               private authService: AuthService,
-              public snackBar: MatSnackBar) {
+              private modalService: BsModalService) {
     this.joueurForm = this.formBuilder.group({
       Email: ['', Validators.required],
       MotDePasse: ['', Validators.required]
@@ -69,16 +73,17 @@ export class LoginComponent implements OnInit {
           return
         } 
         else{
-          this.snackBar.open("Compte authentifié avec succés", "Info", {
-            duration: 2000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-          });
+          this.isReady = true;
+          this.openModal(this.template);
           this.router.navigate(['/']);
         }
       }
     );
     this.authService.authJoueur(this.joueurForm);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   unLog(){

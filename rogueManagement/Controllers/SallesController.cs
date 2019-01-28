@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class SallesController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: Salles
         public ActionResult Index()
@@ -52,6 +52,7 @@ namespace rogueManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                salle.IdSalle = db.Salle.Count() + 1;
                 db.Salle.Add(salle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

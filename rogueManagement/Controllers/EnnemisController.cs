@@ -14,7 +14,7 @@ namespace rogueManagement.Controllers
 {
     public class EnnemisController : Controller
     {
-        private BddContext db = new BddContext();
+        private rogueContext db = new rogueContext();
 
         // GET: Ennemis
         public ActionResult Index()

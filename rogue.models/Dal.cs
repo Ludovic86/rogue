@@ -56,6 +56,38 @@ namespace rogue.models
             bdd.SaveChanges();
         }
 
+        public IEnumerable<Personnage> GetPersoFromDb()
+        {
+            return bdd.Personnage.ToArray();
+        }
+
+        public IEnumerable<Donjon> GetDonjonsFromDb()
+        {
+            return bdd.Donjon.ToArray();
+        }
+
+        public IEnumerable<Salle> GetSalles()
+        {
+            return bdd.Salle.ToArray();
+        }
+
+        public IEnumerable<Item> GetItems()
+        {
+            return bdd.Item.ToArray();
+        }
+
+        public IEnumerable<Ennemi> GetEnnemis()
+        {
+            return bdd.Ennemi.ToArray();
+        }
+
+        public IEnumerable<Participe> TrouverParticipationParId(int id)
+        {
+            var participation = bdd.Participe.Where(p => p.IdJoueur == id);
+            return participation;
+        }
+
+
         public PartieVM ConstructPartie(Participe partie)
         {
             List<Item> items = new List<Item>();
@@ -75,6 +107,24 @@ namespace rogue.models
                 NbrSalle = partie.NbreSalle
             };
             return partieBuilt;
+        }
+
+        public void TerminePartie(string email)
+        {
+            var joueurTrouve = this.TrouverJoueurParStringEmail(email);
+            var participation = this.TrouverParticipationParId(joueurTrouve.IdJoueur);
+
+            if (participation.Any())
+            {
+                foreach (var partie in participation)
+                {
+                    if (partie.EnCours)
+                    {
+                        partie.EnCours = false;                        
+                    }
+                }
+            }
+            bdd.SaveChanges();
         }
 
         public void Dispose()

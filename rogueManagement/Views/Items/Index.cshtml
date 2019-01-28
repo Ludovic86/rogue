@@ -15,7 +15,18 @@
         <th>
             @Html.DisplayNameFor(model => model.NomItem)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.AtkItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpeedItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HpItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -24,9 +35,21 @@
             @Html.DisplayFor(modelItem => item.NomItem)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdItem }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdItem }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdItem })
+            @Html.DisplayFor(modelItem => item.AtkItem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpeedItem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HpItem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IdItem }) |
+            @Html.ActionLink("Details", "Details", new { id = item.IdItem }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IdItem })
         </td>
     </tr>
 }
