@@ -1,123 +1,175 @@
 <mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerVerticalCenter"></mat-spinner>
 <div *ngIf="isReady && !loggedJoueur">Vous devez être connecté pour faire une partie <a [routerLink]='["/login"]'>Se connecter</a></div>
-
-<div *ngIf="partieEnCours" class="row formVerticalCenter panel panel-default">
-        <div class="row">
+<div class="container">
+        <div *ngIf="partieEnCours" class="row formVerticalCenter panel panel-default">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-5">
+                        Une partie en cours a été trouvée
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Donjon</th>
+                            <th>Personnage</th>
+                            <th>HP restants</th>
+                            <th>Salles accomplies</th>
+                            <th>Inventaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{partieEnCours.nomDonjon}}</td>
+                            <td>{{partieEnCours.nomPersonnage}}</td>
+                            <td>{{partieEnCours.hpLeft}}</td>
+                            <td>{{partieEnCours.nbrSalle}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed"
+                                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Items
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="collapseBasic" [collapse]="isCollapsed" class="card card-block card-header">
+                    <div *ngFor="let items of partieEnCours.inventaire" class="well well-lg text-center" [tooltip]="items.description">{{items.nomItem}}</div>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-primary">Continuer cette partie</button>
+                    <button type="button" class="btn btn-primary" (click)="nouvellePartie()">Nouvelle partie</button>
+                </div>
+                <div class="row"><em>Attention, si vous commencez une nouvelle partie, celle en cours sera considérée comme terminée</em></div>
+        </div>
+        
+        <div *ngIf="!partieEnCours && !selectedPerso" class="row formVerticalCenter panel panel-default">
             <div class="col-md-4 col-md-offset-5">
-                Une partie en cours a été trouvée
+                Selectionnez un personnage
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>Nom</th>
+                        <th>Classe</th>
+                        <th>Vitesse</th>
+                        <th>Attaque</th>
+                        <th>HP</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let perso of selectionPerso">
+                        <td><img [src]="imgStringConstructor(perso.nomPersonnage)" class="img-responsive"></td>
+                        <td>{{perso.nomPersonnage}}</td>
+                        <td>{{perso.classe}}</td>
+                        <td>{{perso.speedPerso}}</td>
+                        <td>{{perso.atkPerso}}</td>
+                        <td>{{perso.hpPerso}}</td>
+                        <td>{{perso.descriptionPerso}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="setSelectedPerso(perso)">Valider
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div *ngIf="selectedPerso && selectionDonjon" class="row formVerticalCenter panel panel-default">
+            <div class="col-md-4 col-md-offset-5">
+                Selectionnez un donjon
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let donjon of selectionDonjon">
+                        <td><img [src]="imgStringConstructor(donjon.nomDonjon)" class="img-responsive"></td>
+                        <td>{{donjon.nomDonjon}}</td>
+                        <td>{{donjon.descriptionDonjon}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="setSelectedDonjon(donjon)">Valider
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div *ngIf="selectedPerso && selectedDonjon" class="formVerticalCenter panel panel-default">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-5 panel panel-default text-center">
+                    {{currentRoom.nomSalle}}
+                </div>
+            </div>
+            <div *ngIf="currentEnnemi">
+                <div class="row text-center">
+                    {{currentEnnemi.nomEnnemi}}
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-5 panel panel-default" style="padding-top: 10px">
+                        <img [src]="imgStringConstructor(currentEnnemi.nomEnnemi)" class="img-responsive center-block">
+                    </div>       
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="mb-2">
+                            <progressbar [max]="currentEnnemi.pvEnnemi" [value]="currentEnnemiHP" type="success">
+                                <span class="text-nowrap">{{currentEnnemiHP}} / {{currentEnnemi.pvEnnemi}}</span>
+                            </progressbar>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="mb-2">
+                            <progressbar [max]="currentEnnemi.pvEnnemi" [value]="currentEnnemi.pvEnnemi">
+                                <span class="text-nowrap">{{currentEnnemi.pvEnnemi}} / {{currentEnnemi.pvEnnemi}}</span>
+                            </progressbar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row panel panel-default">
+                <div class="col-md-2">
+                    <img [src]="imgStringConstructor(newGame.personnage.nomPersonnage)" class="img-responsive center-block">
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-2">
+                            ATK
+                        </div>
+                        <div class="col-md-2">
+                            SPEED
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-2">
+                                <progressbar [max]="newGame.personnage.hpPerso" [value]="currentPersoHP" type="success">
+                                    <span class="text-nowrap">{{currentPersoHP}} / {{newGame.personnage.hpPerso}}</span>
+                                </progressbar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            {{newGame.personnage.atkPerso}}
+                        </div>
+                        <div class="col-md-2">
+                            {{newGame.personnage.speedPerso}}
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger" (click)="attaquer()">Attaquer</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="setSelectedDonjon(donjon)">Inventaire</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Donjon</th>
-                    <th>Personnage</th>
-                    <th>HP restants</th>
-                    <th>Salles accomplies</th>
-                    <th>Inventaire</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{partieEnCours.nomDonjon}}</td>
-                    <td>{{partieEnCours.nomPersonnage}}</td>
-                    <td>{{partieEnCours.hpLeft}}</td>
-                    <td>{{partieEnCours.nbrSalle}}</td>
-                    <td>
-                        <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed"
-                            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Items
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div id="collapseBasic" [collapse]="isCollapsed" class="card card-block card-header">
-            <div *ngFor="let items of partieEnCours.inventaire" class="well well-lg text-center" [tooltip]="items.description">{{items.nomItem}}</div>
-        </div>
-        <div class="row">
-            <button type="button" class="btn btn-primary">Continuer cette partie</button>
-            <button type="button" class="btn btn-primary" (click)="nouvellePartie()">Nouvelle partie</button>
-        </div>
-        <div class="row"><em>Attention, si vous commencez une nouvelle partie, celle en cours sera considérée comme terminée</em></div>
-</div>
-
-<div *ngIf="!partieEnCours && !selectedPerso" class="row formVerticalCenter panel panel-default">
-    <div class="col-md-4 col-md-offset-5">
-        Selectionnez un personnage
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th> </th>
-                <th>Nom</th>
-                <th>Classe</th>
-                <th>Vitesse</th>
-                <th>Attaque</th>
-                <th>HP</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let perso of selectionPerso">
-                <td><img [src]="imgStringConstructor(perso.nomPersonnage)" class="img-responsive"></td>
-                <td>{{perso.nomPersonnage}}</td>
-                <td>{{perso.classe}}</td>
-                <td>{{perso.speedPerso}}</td>
-                <td>{{perso.atkPerso}}</td>
-                <td>{{perso.hpPerso}}</td>
-                <td>{{perso.descriptionPerso}}</td>
-                <td>
-                    <button type="button" class="btn btn-primary" (click)="setSelectedPerso(perso)">Valider
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div *ngIf="selectedPerso && selectionDonjon" class="row formVerticalCenter panel panel-default">
-    <div class="col-md-4 col-md-offset-5">
-        Selectionnez un donjon
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th> </th>
-                <th>Nom</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let donjon of selectionDonjon">
-                <td><img [src]="imgStringConstructor(donjon.nomDonjon)" class="img-responsive"></td>
-                <td>{{donjon.nomDonjon}}</td>
-                <td>{{donjon.descriptionDonjon}}</td>
-                <td>
-                    <button type="button" class="btn btn-primary" (click)="setSelectedDonjon(donjon)">Valider
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div *ngIf="selectedPerso && selectedDonjon" class="row formVerticalCenter panel panel-default">
-    <div>
-        {{currentRoom.nomSalle}} <br> {{currentRoom.texteSalle}}
-    </div>
-    <div *ngIf="currentEnnemi">
-        <div>
-            {{currentEnnemi.nomEnnemi}}
-        </div>
-        <div class="col-md-5 col-md-offset-4">
-            <img [src]="imgStringConstructor(currentEnnemi.nomEnnemi)">
-        </div>
-        <div class="col-md-4 col-md-offset-4">
-                <div class="mb-2">
-                        <progressbar [max]="currentEnnemi.pvEnnemi" [value]="currentEnnemi.pvEnnemi">
-                          <span class="text-nowrap">{{currentEnnemi.pvEnnemi}} / {{currentEnnemi.pvEnnemi}}</span>
-                        </progressbar>
-                </div>
-        </div>
-    </div>
 </div>

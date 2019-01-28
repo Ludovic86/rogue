@@ -27,6 +27,8 @@ export class GameComponent implements OnInit {
   currentRoom: Salle;
   currentEnnemi: Ennemi;
   currentItem: Item;
+  currentEnnemiHP: number;
+  currentPersoHP: number;
 
   constructor(private authService: AuthService, private gameService: GameService) { }
 
@@ -111,6 +113,7 @@ export class GameComponent implements OnInit {
     this.selectedDonjon = donjon;
     this.newGame.donjon = this.selectedDonjon;
     this.selectionDonjon = null;
+    this.currentPersoHP = this.newGame.personnage.hpPerso;
     this.generateRoom();
   }
 
@@ -121,7 +124,9 @@ export class GameComponent implements OnInit {
     this.newGame.salles = this.removeElementFromGame(i, this.newGame.salles);
     if (this.rollFight()){
       i = Math.floor(Math.random() * this.newGame.ennemis.length) + 0;
+      debugger;
       this.currentEnnemi = this.newGame.ennemis[i];
+      this.currentEnnemiHP = this.currentEnnemi.pvEnnemi;
     }
     if (this.rollFight()){
       i = Math.floor(Math.random() * this.newGame.objets.length) + 0;
@@ -139,12 +144,19 @@ export class GameComponent implements OnInit {
   }
 
   rollFight() : boolean{
-    debugger;
     var i = Math.round(Math.random());
     if (i == 0){
       return true;
     }
     return false;
+  }
+
+  attaquer(){
+    debugger;
+    this.currentEnnemiHP = this.currentEnnemiHP - this.newGame.personnage.atkPerso;
+    if (this.currentEnnemiHP < 0){
+      this.currentEnnemiHP = 0;
+    }
   }
 
 

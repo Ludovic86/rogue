@@ -18,8 +18,8 @@ export interface Personnage{
     nomPersonnage?: string;
     classe?: string;
     speed?: number;
-    hp?: number;
-    atk?: number;
+    hpPerso: number;
+    atkPerso: number;
     description: string;
 }
 
@@ -35,7 +35,7 @@ export interface Ennemi{
     nomEnnemi?: string;
     atkEnnemi?: number;
     speedEnnemi?: number;
-    hpEnnemi?: number;
+    pvEnnemi?: number;
     isBoss?: boolean;
 }
 
