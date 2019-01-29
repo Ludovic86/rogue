@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { JoueurVm } from '../models/joueurvm.model';
 import { GameService } from '../services/game.service';
 import { PartieVM, Personnage, Donjon, Game, Salle, Ennemi, Item } from '../models/game.model';
-import { CollapseModule } from 'ngx-bootstrap';
+import { CollapseModule, BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
@@ -14,6 +14,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 })
 export class GameComponent implements OnInit {
 
+  modalRef: BsModalRef;
   isAuth: boolean;
   isReady: boolean;
   loggedJoueur: JoueurVm;
@@ -29,8 +30,15 @@ export class GameComponent implements OnInit {
   currentItem: Item;
   currentEnnemiHP: number;
   currentPersoHP: number;
+  atkReady: boolean = true;
+  atkCountDown: number;
+  ennemiCountDown: number;
+  lootOpened: boolean;
 
-  constructor(private authService: AuthService, private gameService: GameService) { }
+  @ViewChild('Loot') templateLoot: TemplateRef<any>;
+  @ViewChild('noLoot') templateNoLoot: TemplateRef<any>;
+
+  constructor(private authService: AuthService, private gameService: GameService, private modalService: BsModalService) { }
 
   ngOnInit() {
 
@@ -65,8 +73,11 @@ export class GameComponent implements OnInit {
   }
 
   imgStringConstructor(img: string) : string{
-    var str = "../../assets/img/" + img + ".png";
-    return str;
+    return "../../assets/img/" + img + ".png";
+  }
+
+  potraitStringConstructor(img : string) : string{
+    return "../../assets/img/" + img + "Portrait.png";
   }
 
   nouvellePartie(){
@@ -118,15 +129,19 @@ export class GameComponent implements OnInit {
   }
 
   generateRoom(){
-    this.rollFight()
+    this.lootOpened = false;
+    this.currentEnnemi = null;
+    this.currentRoom = null;
+    this.currentItem = null;
     var i = Math.floor(Math.random() * this.newGame.salles.length) + 0;
     this.currentRoom = this.newGame.salles[i];
     this.newGame.salles = this.removeElementFromGame(i, this.newGame.salles);
     if (this.rollFight()){
       i = Math.floor(Math.random() * this.newGame.ennemis.length) + 0;
-      debugger;
       this.currentEnnemi = this.newGame.ennemis[i];
       this.currentEnnemiHP = this.currentEnnemi.pvEnnemi;
+      this.timerPerso();
+      this.timerEnnemi();
     }
     if (this.rollFight()){
       i = Math.floor(Math.random() * this.newGame.objets.length) + 0;
@@ -152,11 +167,88 @@ export class GameComponent implements OnInit {
   }
 
   attaquer(){
-    debugger;
     this.currentEnnemiHP = this.currentEnnemiHP - this.newGame.personnage.atkPerso;
+    this.atkReady = true;
+    this.timerPerso();
     if (this.currentEnnemiHP < 0){
       this.currentEnnemiHP = 0;
     }
+  }
+
+  attaquerEnnemi(){
+    if (this.currentEnnemiHP > 0){
+      this.currentPersoHP = this.currentPersoHP - this.currentEnnemi.atkEnnemi;
+      this.timerEnnemi();
+      if (this.currentPersoHP < 0){
+        this.currentPersoHP = 0;
+      }
+    } 
+  }
+
+  timerEnnemi(){
+    if (this.currentEnnemiHP == 0){
+      return;
+    }
+    this.ennemiCountDown = 0;
+    var interval = setInterval(() =>{
+      this.ennemiCountDown++
+      if (this.ennemiCountDown == this.currentEnnemi.speedEnnemi){
+        this.attaquerEnnemi()
+        clearInterval(interval);
+      };
+    }, 1000)
+  }
+
+  timerPerso(){
+    if (this.currentEnnemiHP == 0){
+      this.atkReady = true;
+      return;
+    }
+    this.atkCountDown = 0;
+    var interval = setInterval(() =>{
+      this.atkCountDown++
+      if (this.atkCountDown == this.newGame.personnage.speedPerso){
+          this.atkReady = false;
+          clearInterval(interval);
+      };
+    }, 1000)
+  }
+
+  openLoot(){
+    this.lootOpened = true;
+    if(this.currentItem != undefined){
+      this.openModal(this.templateLoot)
+      return;
+    }
+    this.openModal(this.templateNoLoot);
+  }
+  openModal(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template)
+  }
+
+  confirmItem() : void{
+    this.newGame.inventaire = this.newGame.inventaire || [];
+    this.newGame.inventaire.push(this.currentItem);
+    this.calculateBonus();
+    this.modalRef.hide();
+  }
+
+  calculateBonus(){
+    for (let item of this.newGame.inventaire){
+      if (item.atkItem > 0){
+        this.newGame.personnage.atkPerso = this.newGame.personnage.atkPerso + item.atkItem;
+      }
+      if (item.speedItem > 0){
+        this.newGame.personnage.speedPerso = this.newGame.personnage.speedPerso - item.speedItem;
+        if (this.newGame.personnage.speedPerso < 1){
+          this.newGame.personnage.speedPerso = 1;
+        }
+      }
+    }
+  }
+
+  declineItem() : void{
+    this.modalRef.hide();
   }
 
 

@@ -17,7 +17,7 @@ export interface Personnage{
     idPersonnage?: number;
     nomPersonnage?: string;
     classe?: string;
-    speed?: number;
+    speedPerso: number;
     hpPerso: number;
     atkPerso: number;
     description: string;
