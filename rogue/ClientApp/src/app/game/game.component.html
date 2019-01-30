@@ -24,16 +24,12 @@
                             <td>{{partieEnCours.hpLeft}}</td>
                             <td>{{partieEnCours.nbrSalle}}</td>
                             <td>
-                                <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed"
-                                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Items
-                                </button>
+                                <button type="button" class="btn btn-primary" (click)="openModal(inventairePartieEnCours)">Items</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div id="collapseBasic" [collapse]="isCollapsed" class="card card-block card-header">
-                    <div *ngFor="let items of partieEnCours.inventaire" class="well well-lg text-center" [tooltip]="items.description">{{items.nomItem}}</div>
-                </div>
+                
                 <div class="row">
                     <button type="button" class="btn btn-primary">Continuer cette partie</button>
                     <button type="button" class="btn btn-primary" (click)="nouvellePartie()">Nouvelle partie</button>
@@ -166,8 +162,8 @@
                         </div>
                         <div class="col-md-8">
                             <div class="mb-2">
-                                <progressbar [max]="newGame.personnage.hpPerso" [value]="currentPersoHP" type="success">
-                                    <span class="text-nowrap">{{currentPersoHP}} / {{newGame.personnage.hpPerso}}</span>
+                                <progressbar [max]="newGame.personnage.hpPerso" [value]="newGame.hpLeft" type="success">
+                                    <span class="text-nowrap">{{newGame.hpLeft}} / {{newGame.personnage.hpPerso}}</span>
                                 </progressbar>
                             </div>
                         </div>
@@ -220,6 +216,21 @@
             </ul>
             <p *ngIf="!newGame.inventaire">Pas encore d'objets</p>
         </div>
+</ng-template>
+
+<ng-template #inventairePartieEnCours>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Inventaire</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <ul *ngIf="partieEnCours.inventaire">
+            <li *ngFor="let item of partieEnCours.inventaire" [tooltip]="item.description">{{item.nomItem}}</li>
+        </ul>
+        <p *ngIf="!partieEnCours.inventaire">Pas encore d'objets</p>
+    </div>
 </ng-template>
 
 <ng-template #noLoot>

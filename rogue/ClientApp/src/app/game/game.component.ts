@@ -29,7 +29,6 @@ export class GameComponent implements OnInit {
   currentEnnemi: Ennemi;
   currentItem: Item;
   currentEnnemiHP: number;
-  currentPersoHP: number;
   atkReady: boolean = true;
   atkCountDown: number;
   ennemiCountDown: number;
@@ -63,6 +62,7 @@ export class GameComponent implements OnInit {
     this.gameService.partieEnCoursSub.subscribe(
       (partie: PartieVM) =>{
         this.partieEnCours = partie;
+        console.log(this.partieEnCours)
         if (this.partieEnCours == null){
           this.nouvellePartie();
         }
@@ -124,11 +124,13 @@ export class GameComponent implements OnInit {
     this.selectedDonjon = donjon;
     this.newGame.donjon = this.selectedDonjon;
     this.selectionDonjon = null;
-    this.currentPersoHP = this.newGame.personnage.hpPerso;
+    this.newGame.hpLeft = this.newGame.personnage.hpPerso;
     this.generateRoom();
   }
 
   generateRoom(){
+    this.newGame.nbreSalle++;
+    this.gameService.saveGame(this.newGame);
     this.lootOpened = false;
     this.currentEnnemi = null;
     this.currentRoom = null;
@@ -177,10 +179,10 @@ export class GameComponent implements OnInit {
 
   attaquerEnnemi(){
     if (this.currentEnnemiHP > 0){
-      this.currentPersoHP = this.currentPersoHP - this.currentEnnemi.atkEnnemi;
+      this.newGame.hpLeft = this.newGame.hpLeft - this.currentEnnemi.atkEnnemi;
       this.timerEnnemi();
-      if (this.currentPersoHP < 0){
-        this.currentPersoHP = 0;
+      if (this.newGame.hpLeft < 0){
+        this.newGame.hpLeft = 0;
       }
     } 
   }
@@ -228,8 +230,16 @@ export class GameComponent implements OnInit {
 
   confirmItem() : void{
     this.newGame.inventaire = this.newGame.inventaire || [];
+    if (this.currentItem.atkItem > 0){
+      this.newGame.personnage.atkPerso = this.newGame.personnage.atkPerso + this.currentItem.atkItem;
+    }
+    if (this.currentItem.speedItem > 0){
+      this.newGame.personnage.speedPerso = this.newGame.personnage.speedPerso - this.currentItem.speedItem;
+      if (this.newGame.personnage.speedPerso < 1){
+        this.newGame.personnage.speedPerso = 1;
+      }
+    }
     this.newGame.inventaire.push(this.currentItem);
-    this.calculateBonus();
     this.modalRef.hide();
   }
 

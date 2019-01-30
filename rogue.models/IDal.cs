@@ -1,4 +1,5 @@
-﻿using System;
+﻿using rogue.models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace rogue.models
         IEnumerable<Salle> GetSalles();
         IEnumerable<Item> GetItems();
         IEnumerable<Ennemi> GetEnnemis();
-
+        void SauvegarderPartie(Game game, string email);
 
     }
 }

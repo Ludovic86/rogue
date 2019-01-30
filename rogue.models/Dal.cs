@@ -1,4 +1,5 @@
-﻿using System;
+﻿using rogue.models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -87,6 +88,16 @@ namespace rogue.models
             return participation;
         }
 
+        public Participe TrouverPartieEnCours(int id)
+        {
+            return bdd.Participe.Where(p => p.IdJoueur == id && p.EnCours == true).FirstOrDefault();
+        }
+
+        public IEnumerable<GagnerObjet> TrouverGagnerObjet(int id)
+        {
+            return bdd.GagnerObjet.Where(g => g.IdPartie == id);
+        }
+
 
         public PartieVM ConstructPartie(Participe partie)
         {
@@ -125,6 +136,49 @@ namespace rogue.models
                 }
             }
             bdd.SaveChanges();
+        }
+
+        public void SauvegarderPartie(Game game, string email)
+        {
+            var joueur = TrouverJoueurParStringEmail(email);
+            var participation = TrouverPartieEnCours(joueur.IdJoueur);
+            if (participation != null)
+            {
+                var items = TrouverGagnerObjet(participation.IdPartie);
+                participation.HpLeft = game.HpLeft;
+                participation.NbreSalle = game.NbreSalle;
+                if (game.Inventaire != null)
+                {
+                    if (items.Count() == 0)
+                    {
+                        
+                    }
+                }
+                bdd.SaveChanges();
+                return;
+            }
+            var partie = new Partie() { IdPartie = bdd.Partie.Count() + 1 };
+            bdd.Partie.Add(partie);
+            bdd.SaveChanges();
+            bdd.Participe.Add(new Participe()
+            {
+                IdJoueur = joueur.IdJoueur,
+                IdDonjon = game.Donjon.IdDonjon,
+                IdPersonnage = game.Personnage.IdPersonnage,
+                IdPartie = partie.IdPartie,
+                HpLeft = game.HpLeft,
+                NbreSalle = game.NbreSalle,
+                EnCours = true
+            });
+            if (game.Inventaire != null)
+            {
+                foreach (var item in game.Inventaire)
+                {
+                    bdd.GagnerObjet.Add(new GagnerObjet { IdItem = item.IdItem, IdPartie = partie.IdPartie });
+                }
+            }
+            bdd.SaveChanges();
+            return;
         }
 
         public void Dispose()

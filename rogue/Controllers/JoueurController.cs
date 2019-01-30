@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using rogue.models;
-using rogue.ViewModels;
+using rogue.models.ViewModels;
 
 namespace rogue.Controllers
 {

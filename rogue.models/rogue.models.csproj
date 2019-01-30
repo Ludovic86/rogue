@@ -140,6 +140,8 @@
     <Compile Include="Salle.cs" />
     <Compile Include="TypeItem.cs" />
     <Compile Include="ValeurItem.cs" />
+    <Compile Include="ViewModels\Game.cs" />
+    <Compile Include="ViewModels\JoueurVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

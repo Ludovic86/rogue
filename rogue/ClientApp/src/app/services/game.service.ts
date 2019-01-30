@@ -86,6 +86,11 @@ export class GameService{
             console.log(error);
         })
     }
+
+    saveGame(game: Game){
+        this.http.post<Game>(this.Url + 'api/Game/SaveGame', game).subscribe(result =>{
+        }, error => console.log(error));
+    }
     
 
 }

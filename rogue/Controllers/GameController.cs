@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using rogue.models;
-using rogue.ViewModels;
+using rogue.models.ViewModels;
 
 namespace rogue.Controllers
 {
@@ -52,6 +52,14 @@ namespace rogue.Controllers
                 Objets = dal.GetItems(),
                 Ennemis = dal.GetEnnemis()
             };
+        }
+
+        [HttpPost]
+        [Route("api/Game/SaveGame")]
+        public void SaveGame([FromBody] Game game)
+        {
+
+            dal.SauvegarderPartie(game, HttpContext.User.Identity.Name);
         }
 
         [HttpPost]
