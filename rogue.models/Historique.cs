@@ -13,7 +13,7 @@ namespace rogue.models
         public int IdSalle { get; set; }
         public int? Ordre { get; set; }
 
-        public Partie IdPartieNavigation { get; set; }
-        public Salle IdSalleNavigation { get; set; }
+        //public Partie IdPartieNavigation { get; set; }
+        //public Salle IdSalleNavigation { get; set; }
     }
 }

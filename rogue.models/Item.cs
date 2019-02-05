@@ -8,11 +8,11 @@ namespace rogue.models
     [Table("dbo.ITEM")]
     public partial class Item
     {
-        public Item()
-        {
-            Appartient = new HashSet<Appartient>();
-            EstDe = new HashSet<EstDe>();
-        }
+        //public Item()
+        //{
+        //    Appartient = new HashSet<Appartient>();
+        //    EstDe = new HashSet<EstDe>();
+        //}
 
         [Key, Column("ID_ITEM")]
         public int IdItem { get; set; }
@@ -25,7 +25,7 @@ namespace rogue.models
         public int SpeedItem { get; set; }
         public int HpItem { get; set; }
 
-        public ICollection<Appartient> Appartient { get; set; }
-        public ICollection<EstDe> EstDe { get; set; }
+        //public ICollection<Appartient> Appartient { get; set; }
+        //public ICollection<EstDe> EstDe { get; set; }
     }
 }

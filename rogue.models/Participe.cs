@@ -20,9 +20,9 @@ namespace rogue.models
         public int NbreSalle { get; set; }
         public bool EnCours { get; set; }
 
-        public Donjon IdDonjonNavigation { get; set; }
-        public Joueur IdJoueurNavigation { get; set; }
-        public Partie IdPartieNavigation { get; set; }
-        public Personnage IdPersonnageNavigation { get; set; }
+        //public Donjon IdDonjonNavigation { get; set; }
+        //public Joueur IdJoueurNavigation { get; set; }
+        //public Partie IdPartieNavigation { get; set; }
+        //public Personnage IdPersonnageNavigation { get; set; }
     }
 }

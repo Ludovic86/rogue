@@ -70,23 +70,23 @@ namespace rogue.models
 
                 entity.Property(e => e.NumeroSalle).HasColumnName("NUMERO_SALLE");
 
-                entity.HasOne(d => d.IdDonjonNavigation)
-                    .WithMany(p => p.Appartient)
-                    .HasForeignKey(d => d.IdDonjon)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_APPARTIE_APPARTIEN_DONJON");
+                //entity.HasOne(d => d.IdDonjonNavigation)
+                //    .WithMany(p => p.Appartient)
+                //    .HasForeignKey(d => d.IdDonjon)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_APPARTIE_APPARTIEN_DONJON");
 
-                entity.HasOne(d => d.IdItemNavigation)
-                    .WithMany(p => p.Appartient)
-                    .HasForeignKey(d => d.IdItem)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_APPARTIE_APPARTIEN_ITEM");
+                //entity.HasOne(d => d.IdItemNavigation)
+                //    .WithMany(p => p.Appartient)
+                //    .HasForeignKey(d => d.IdItem)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_APPARTIE_APPARTIEN_ITEM");
 
-                entity.HasOne(d => d.IdSalleNavigation)
-                    .WithMany(p => p.Appartient)
-                    .HasForeignKey(d => d.IdSalle)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_APPARTIE_APPARTIEN_SALLE");
+                //entity.HasOne(d => d.IdSalleNavigation)
+                //    .WithMany(p => p.Appartient)
+                //    .HasForeignKey(d => d.IdSalle)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_APPARTIE_APPARTIEN_SALLE");
             });
 
             modelBuilder.Entity<Donjon>(entity =>
@@ -154,17 +154,17 @@ namespace rogue.models
 
                 entity.Property(e => e.IdType).HasColumnName("ID_TYPE");
 
-                entity.HasOne(d => d.IdItemNavigation)
-                    .WithMany(p => p.EstDe)
-                    .HasForeignKey(d => d.IdItem)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_EST_DE_EST_DE_ITEM");
+                //entity.HasOne(d => d.IdItemNavigation)
+                //    .WithMany(p => p.EstDe)
+                //    .HasForeignKey(d => d.IdItem)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_EST_DE_EST_DE_ITEM");
 
-                entity.HasOne(d => d.IdTypeNavigation)
-                    .WithMany(p => p.EstDe)
-                    .HasForeignKey(d => d.IdType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_EST_DE_EST_DE2_TYPE_ITE");
+                //entity.HasOne(d => d.IdTypeNavigation)
+                //    .WithMany(p => p.EstDe)
+                //    .HasForeignKey(d => d.IdType)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_EST_DE_EST_DE2_TYPE_ITE");
             });
 
             modelBuilder.Entity<GagnerObjet>(entity =>
@@ -188,17 +188,17 @@ namespace rogue.models
 
                 entity.Property(e => e.IdItem).HasColumnName("ID_ITEM");
 
-                entity.HasOne(d => d.IdPartieNavigation)
-                    .WithMany(p => p.GagnerObjet)
-                    .HasForeignKey(d => d.IdPartie)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GAGNER_O_GAGNER_OB_PARTIE");
+                //entity.HasOne(d => d.IdPartieNavigation)
+                //    .WithMany(p => p.GagnerObjet)
+                //    .HasForeignKey(d => d.IdPartie)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_GAGNER_O_GAGNER_OB_PARTIE");
 
-                entity.HasOne(d => d.IdSalleNavigation)
-                    .WithMany(p => p.GagnerObjet)
-                    .HasForeignKey(d => d.IdSalle)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GAGNER_O_GAGNER_OB_SALLE");
+                //entity.HasOne(d => d.IdSalleNavigation)
+                //    .WithMany(p => p.GagnerObjet)
+                //    .HasForeignKey(d => d.IdSalle)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_GAGNER_O_GAGNER_OB_SALLE");
             });
 
             modelBuilder.Entity<HistoEnnemi>(entity =>
@@ -222,23 +222,23 @@ namespace rogue.models
 
                 entity.Property(e => e.IdPartie).HasColumnName("ID_PARTIE");
 
-                entity.HasOne(d => d.IdEnnemiNavigation)
-                    .WithMany(p => p.HistoEnnemi)
-                    .HasForeignKey(d => d.IdEnnemi)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_HISTO_EN_HISTO_ENN_ENNEMI");
+                //entity.HasOne(d => d.IdEnnemiNavigation)
+                //    .WithMany(p => p.HistoEnnemi)
+                //    .HasForeignKey(d => d.IdEnnemi)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_HISTO_EN_HISTO_ENN_ENNEMI");
 
-                entity.HasOne(d => d.IdPartieNavigation)
-                    .WithMany(p => p.HistoEnnemi)
-                    .HasForeignKey(d => d.IdPartie)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_HISTO_EN_HISTO_ENN_PARTIE");
+                //entity.HasOne(d => d.IdPartieNavigation)
+                //    .WithMany(p => p.HistoEnnemi)
+                //    .HasForeignKey(d => d.IdPartie)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_HISTO_EN_HISTO_ENN_PARTIE");
 
-                entity.HasOne(d => d.IdSalleNavigation)
-                    .WithMany(p => p.HistoEnnemi)
-                    .HasForeignKey(d => d.IdSalle)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_HISTO_EN_HISTO_ENN_SALLE");
+                //entity.HasOne(d => d.IdSalleNavigation)
+                //    .WithMany(p => p.HistoEnnemi)
+                //    .HasForeignKey(d => d.IdSalle)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_HISTO_EN_HISTO_ENN_SALLE");
             });
 
             modelBuilder.Entity<Historique>(entity =>
@@ -259,17 +259,17 @@ namespace rogue.models
 
                 entity.Property(e => e.Ordre).HasColumnName("ORDRE");
 
-                entity.HasOne(d => d.IdPartieNavigation)
-                    .WithMany(p => p.Historique)
-                    .HasForeignKey(d => d.IdPartie)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_HISTORIQ_HISTORIQU_PARTIE");
+                //entity.HasOne(d => d.IdPartieNavigation)
+                //    .WithMany(p => p.Historique)
+                //    .HasForeignKey(d => d.IdPartie)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_HISTORIQ_HISTORIQU_PARTIE");
 
-                entity.HasOne(d => d.IdSalleNavigation)
-                    .WithMany(p => p.Historique)
-                    .HasForeignKey(d => d.IdSalle)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_HISTORIQ_HISTORIQU_SALLE");
+                //entity.HasOne(d => d.IdSalleNavigation)
+                //    .WithMany(p => p.Historique)
+                //    .HasForeignKey(d => d.IdSalle)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_HISTORIQ_HISTORIQU_SALLE");
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -360,29 +360,29 @@ namespace rogue.models
 
                 entity.Property(e => e.EnCours).HasColumnName("EN_COURS");
 
-                entity.HasOne(d => d.IdDonjonNavigation)
-                    .WithMany(p => p.Participe)
-                    .HasForeignKey(d => d.IdDonjon)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PARTICIP_PARTICIPE_DONJON");
+                //entity.HasOne(d => d.IdDonjonNavigation)
+                //    .WithMany(p => p.Participe)
+                //    .HasForeignKey(d => d.IdDonjon)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PARTICIP_PARTICIPE_DONJON");
 
-                entity.HasOne(d => d.IdJoueurNavigation)
-                    .WithMany(p => p.Participe)
-                    .HasForeignKey(d => d.IdJoueur)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PARTICIPE_JOUEUR");
+                //entity.HasOne(d => d.IdJoueurNavigation)
+                //    .WithMany(p => p.Participe)
+                //    .HasForeignKey(d => d.IdJoueur)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PARTICIPE_JOUEUR");
 
-                entity.HasOne(d => d.IdPartieNavigation)
-                    .WithMany(p => p.Participe)
-                    .HasForeignKey(d => d.IdPartie)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PARTICIP_PARTICIPE_PARTIE");
+                //entity.HasOne(d => d.IdPartieNavigation)
+                //    .WithMany(p => p.Participe)
+                //    .HasForeignKey(d => d.IdPartie)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PARTICIP_PARTICIPE_PARTIE");
 
-                entity.HasOne(d => d.IdPersonnageNavigation)
-                    .WithMany(p => p.Participe)
-                    .HasForeignKey(d => d.IdPersonnage)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PARTICIP_PARTICIPE_PERSONNA");
+                //entity.HasOne(d => d.IdPersonnageNavigation)
+                //    .WithMany(p => p.Participe)
+                //    .HasForeignKey(d => d.IdPersonnage)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PARTICIP_PARTICIPE_PERSONNA");
             });
 
             modelBuilder.Entity<Partie>(entity =>

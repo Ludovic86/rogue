@@ -64,15 +64,16 @@ export interface Partie{
 }
 
 export interface Game{
-    email: string;
-    personnage: Personnage;
-    donjon: Donjon;
-    salles: Salle[];
-    objets: Item[];
-    ennemis: Ennemi[];
-    inventaire: Item[];
-    nbreSalle: number;
-    hpLeft: number;
+    email?: string;
+    personnage?: Personnage;
+    donjon?: Donjon;
+    sallesParcourues?: Salle[];
+    salles?: Salle[];
+    objets?: Item[];
+    inventaire?: Item[];
+    ennemis?: Ennemi[];
+    hpLeft?: number;
+    nbreSalle?: number;
 }
 
 export interface PartieVM{

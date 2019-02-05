@@ -15,12 +15,13 @@ namespace rogue.models
         PartieVM ConstructPartie(Participe partie);
         IEnumerable<Personnage> GetPersoFromDb();
         IEnumerable<Donjon> GetDonjonsFromDb();
-        IEnumerable<Participe> TrouverParticipationParId(int id);
+        PartieVM CreeViewModelPartieEnCours(string email);
+        //IEnumerable<Participe> TrouverParticipationParId(int id);
         void TerminePartie(string email);
-        IEnumerable<Salle> GetSalles();
-        IEnumerable<Item> GetItems();
-        IEnumerable<Ennemi> GetEnnemis();
+        Game CreePartie();
+        IEnumerable<PartieVM> GetHistoriqueParties(string email);
         void SauvegarderPartie(Game game, string email);
+        Game ConstruirePartieSauvegardee(string email);
 
     }
 }

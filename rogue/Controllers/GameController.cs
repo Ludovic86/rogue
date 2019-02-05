@@ -20,39 +20,27 @@ namespace rogue.Controllers
             dal = new Dal(bdd);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/Game/GetCurrentPartie/")]
-        public PartieVM GetCurrentPartie([FromBody]JoueurVM joueur)
+        public PartieVM GetCurrentPartie()
         {
-            var partieVM = new PartieVM();
-            var joueurTrouve = dal.TrouverJoueurParStringEmail(joueur.Email);
-            var participation = bdd.Participe.Where(p => p.IdJoueur == joueurTrouve.IdJoueur);
-
-            if (participation.Any())
-            {
-                foreach (var partie in participation)
-                {
-                    if (partie.EnCours)
-                    {
-                        partieVM = dal.ConstructPartie(partie);
-                        return partieVM;
-                    }
-                }
-            }
-            return null;
+            return dal.CreeViewModelPartieEnCours(HttpContext.User.Identity.Name);
         }
 
         [HttpGet]
         [Route("api/Game/CreateNewGame")]
         public Game CreateNewGame()
         {
-            return new Game()
-            {
-                Salles = dal.GetSalles(),
-                Objets = dal.GetItems(),
-                Ennemis = dal.GetEnnemis()
-            };
+            return dal.CreePartie();
         }
+
+        [HttpGet]
+        [Route("api/Game/GetSavedGame")]
+        public Game GetSavedGame()
+        {
+            return dal.ConstruirePartieSauvegardee(HttpContext.User.Identity.Name);
+        }
+
 
         [HttpPost]
         [Route("api/Game/SaveGame")]
@@ -60,6 +48,13 @@ namespace rogue.Controllers
         {
 
             dal.SauvegarderPartie(game, HttpContext.User.Identity.Name);
+        }
+
+        [HttpGet]
+        [Route("api/Game/HistoriqueParties")]
+        public IEnumerable<PartieVM> HistoriqueParties()
+        {
+            return dal.GetHistoriqueParties(HttpContext.User.Identity.Name);
         }
 
         [HttpPost]

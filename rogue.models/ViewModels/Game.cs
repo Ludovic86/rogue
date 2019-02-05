@@ -11,6 +11,7 @@ namespace rogue.models.ViewModels
         public string Email { get; set; }
         public Personnage Personnage { get; set; }
         public Donjon Donjon { get; set; }
+        public IEnumerable<Salle> SallesParcourues { get; set; }
         public IEnumerable<Salle> Salles { get; set; }
         public IEnumerable<Item> Objets { get; set; }
         public IEnumerable<Item> Inventaire { get; set; }

@@ -1,7 +1,7 @@
 <mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerVerticalCenter"></mat-spinner>
 <div *ngIf="isReady && !loggedJoueur">Vous devez être connecté pour faire une partie <a [routerLink]='["/login"]'>Se connecter</a></div>
-<div class="container">
-        <div *ngIf="partieEnCours" class="row formVerticalCenter panel panel-default">
+
+        <div *ngIf="partieEnCours && isReady" class="row formVerticalCenter panel panel-default">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-5">
                         Une partie en cours a été trouvée
@@ -31,13 +31,13 @@
                 </table>
                 
                 <div class="row">
-                    <button type="button" class="btn btn-primary">Continuer cette partie</button>
-                    <button type="button" class="btn btn-primary" (click)="nouvellePartie()">Nouvelle partie</button>
+                    <button type="button" class="btn btn-primary" (click)="getPartieSauvegardee()">Continuer cette partie</button>
+                    <button type="button" class="btn btn-primary" (click)="creeNouvellePartie()">Nouvelle partie</button>
                 </div>
                 <div class="row"><em>Attention, si vous commencez une nouvelle partie, celle en cours sera considérée comme terminée</em></div>
         </div>
         
-        <div *ngIf="!partieEnCours && !selectedPerso" class="row formVerticalCenter panel panel-default">
+        <div *ngIf="!partieEnCours && !selectedPerso && isReady" class="row formVerticalCenter panel panel-default">
             <div class="col-md-4 col-md-offset-5">
                 Selectionnez un personnage
             </div>
@@ -71,7 +71,7 @@
             </table>
         </div>
         
-        <div *ngIf="selectedPerso && selectionDonjon" class="row formVerticalCenter panel panel-default">
+        <div *ngIf="selectedPerso && selectionDonjon && isReady" class="row formVerticalCenter panel panel-default">
             <div class="col-md-4 col-md-offset-5">
                 Selectionnez un donjon
             </div>
@@ -196,12 +196,11 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="!currentEnnemi || currentEnnemiHP == 0" class="row">
+        <div *ngIf="(!currentEnnemi || currentEnnemiHP == 0) && (isReady && selectedDonjon && selectedPerso)" class="row">
             <div class="col-md-2 col-md-offset-5">
                 <button type="button" class="btn btn-primary" (click)="generateRoom()">Salle suivante</button>
             </div>
         </div>
-</div>
 
 <ng-template #inventaire>
         <div class="modal-header">
@@ -227,7 +226,7 @@
     </div>
     <div class="modal-body">
         <ul *ngIf="partieEnCours.inventaire">
-            <li *ngFor="let item of partieEnCours.inventaire" [tooltip]="item.description">{{item.nomItem}}</li>
+            <li *ngFor="let item of partieEnCours.inventaire" ><p [tooltip]="item.description">{{item.nomItem}}</p></li>
         </ul>
         <p *ngIf="!partieEnCours.inventaire">Pas encore d'objets</p>
     </div>

@@ -17,6 +17,8 @@ export class GameService{
     selectionDonjonSub = new Subject<Donjon[]>();
     newGame: Game;
     newGameSub = new Subject<Game>();
+    partieHisto: PartieVM[];
+    partieHistoSub = new Subject<PartieVM[]>();
 
     constructor (private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute){
         this.Url = baseUrl;
@@ -38,8 +40,12 @@ export class GameService{
         this.newGameSub.next(this.newGame);
     }
 
-    getPartieEnCours(joueur: JoueurVm){
-        this.http.post<PartieVM>(this.Url + 'api/Game/GetCurrentPartie/', joueur)
+    emitPartieHisto(){
+        this.partieHistoSub.next(this.partieHisto);
+    }
+
+    getPartieEnCours(){
+        this.http.get<PartieVM>(this.Url + 'api/Game/GetCurrentPartie/')
         .subscribe((response) =>{
             this.partieEnCours = response;
             this.emitPartieEnCours();
@@ -76,11 +82,35 @@ export class GameService{
         })
     }
 
-    getGame(){
+    getNewGame(){
         this.http.get<Game>(this.Url + 'api/Game/CreateNewGame')
         .subscribe((response) =>{
+            console.log('response' + response);
             this.newGame = response;
             this.emitNewGame();
+        },
+        (error) =>{
+            console.log(error);
+        })
+    }
+
+    getSavedGame(){
+        this.http.get<Game>(this.Url + 'api/Game/GetSavedGame')
+        .subscribe((response) =>{
+            console.log(response);
+            this.newGame = response;
+            this.emitNewGame();
+        },
+        (error) =>{
+            console.log(error);
+        })
+    }
+
+    getHistoriqueParties(){
+        this.http.get<PartieVM[]>(this.Url + 'api/Game/HistoriqueParties')
+        .subscribe((response) =>{
+            this.partieHisto = response;
+            this.emitPartieHisto();
         },
         (error) =>{
             console.log(error);

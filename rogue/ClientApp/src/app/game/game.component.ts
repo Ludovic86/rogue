@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { JoueurVm } from '../models/joueurvm.model';
 import { GameService } from '../services/game.service';
@@ -6,13 +6,14 @@ import { PartieVM, Personnage, Donjon, Game, Salle, Ennemi, Item } from '../mode
 import { CollapseModule, BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   modalRef: BsModalRef;
   isAuth: boolean;
@@ -33,15 +34,26 @@ export class GameComponent implements OnInit {
   atkCountDown: number;
   ennemiCountDown: number;
   lootOpened: boolean;
+  savedGameLoaded: boolean;
 
   @ViewChild('Loot') templateLoot: TemplateRef<any>;
   @ViewChild('noLoot') templateNoLoot: TemplateRef<any>;
 
-  constructor(private authService: AuthService, private gameService: GameService, private modalService: BsModalService) { }
+  constructor(private authService: AuthService, private gameService: GameService, private modalService: BsModalService) { 
+    
+  }
 
   ngOnInit() {
-
     this.init();
+  }
+
+  ngOnDestroy(){
+    this.currentEnnemi = undefined;
+    this.newGame = undefined;
+    this.currentItem = undefined;
+    this.currentRoom = undefined;
+    this.selectedPerso = undefined;
+    this.selectedDonjon = undefined;
   }
 
   init(){
@@ -62,14 +74,14 @@ export class GameComponent implements OnInit {
     this.gameService.partieEnCoursSub.subscribe(
       (partie: PartieVM) =>{
         this.partieEnCours = partie;
-        console.log(this.partieEnCours)
         if (this.partieEnCours == null){
-          this.nouvellePartie();
+          debugger;
+          this.creeNouvellePartie();
         }
         this.isReady = true;
       }
     );
-    this.gameService.getPartieEnCours(this.loggedJoueur);
+    this.gameService.getPartieEnCours();
   }
 
   imgStringConstructor(img: string) : string{
@@ -80,10 +92,12 @@ export class GameComponent implements OnInit {
     return "../../assets/img/" + img + "Portrait.png";
   }
 
-  nouvellePartie(){
+  creeNouvellePartie(){
+    this.currentEnnemi = null;
+    this.currentItem = null;
+    this.partieEnCours = null;
     this.isReady = false;
     this.terminePartie(this.loggedJoueur);
-    this.partieEnCours = null;
     this.gameService.selectionPersoSub.subscribe(
       (persos: Personnage[]) =>{
         this.selectionPerso = persos;
@@ -101,12 +115,37 @@ export class GameComponent implements OnInit {
     this.gameService.newGameSub.subscribe(
       (game: Game) =>{
         this.newGame = game;
-        console.log(this.newGame);
       }
     );
     this.gameService.emitNewGame();
-    this.gameService.getGame();
+    this.gameService.getNewGame();
     this.isReady = true;
+  }
+
+  async getPartieSauvegardee(){
+    debugger;
+    this.currentEnnemi = null;
+    this.currentItem = null;
+    this.partieEnCours = null;
+    this.isReady = false;
+    this.gameService.newGameSub.subscribe(
+      (game: Game) =>{
+        debugger;
+        this.newGame = game;
+      }
+    );
+    this.gameService.getSavedGame();
+    this.gameService.emitNewGame();
+    await this.delay(4000);
+    this.selectedPerso = this.newGame.personnage;
+    this.selectedDonjon = this.newGame.donjon;
+    this.calculateBonus();
+    this.generateRoom();
+    this.isReady = true;
+  }
+
+  async delay(ms: number){
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   terminePartie(joueur: JoueurVm){
@@ -129,14 +168,17 @@ export class GameComponent implements OnInit {
   }
 
   generateRoom(){
+    this.isReady = false;
     this.newGame.nbreSalle++;
     this.gameService.saveGame(this.newGame);
     this.lootOpened = false;
-    this.currentEnnemi = null;
     this.currentRoom = null;
     this.currentItem = null;
+    this.currentEnnemi = null;
     var i = Math.floor(Math.random() * this.newGame.salles.length) + 0;
     this.currentRoom = this.newGame.salles[i];
+    this.newGame.sallesParcourues = this.newGame.sallesParcourues || [];
+    this.newGame.sallesParcourues.push(this.currentRoom);
     this.newGame.salles = this.removeElementFromGame(i, this.newGame.salles);
     if (this.rollFight()){
       i = Math.floor(Math.random() * this.newGame.ennemis.length) + 0;
@@ -150,6 +192,7 @@ export class GameComponent implements OnInit {
       this.currentItem = this.newGame.objets[i];
       this.newGame.objets = this.removeElementFromGame(i, this.newGame.objets);
     }
+    this.isReady = true;
   }
 
   removeElementFromGame(element: number, list: any[]) : any[]{
@@ -178,6 +221,10 @@ export class GameComponent implements OnInit {
   }
 
   attaquerEnnemi(){
+    debugger;
+    if (this.currentEnnemi == undefined){
+      return;
+    }
     if (this.currentEnnemiHP > 0){
       this.newGame.hpLeft = this.newGame.hpLeft - this.currentEnnemi.atkEnnemi;
       this.timerEnnemi();
@@ -188,7 +235,8 @@ export class GameComponent implements OnInit {
   }
 
   timerEnnemi(){
-    if (this.currentEnnemiHP == 0){
+    debugger;
+    if (this.currentEnnemiHP == 0 || this.currentEnnemi == undefined){
       return;
     }
     this.ennemiCountDown = 0;
