@@ -273,49 +273,43 @@ namespace rogue.models
             var participation = TrouverPartieEnCours(joueur.IdJoueur);
             if (participation != null)
             {
-                var itemsEnDb = TrouverGagnerObjet(participation.IdPartie);
-                var itemsEnInventaire = new List<GagnerObjet>();
-                var salles = TrouverHistoriqueSalles(participation.IdPartie);
+                var itemsEnDb = TrouverGagnerObjet(participation.IdPartie).ToArray();
+                var sallesEnDb = TrouverHistoriqueSalles(participation.IdPartie);
                 var listSalles = new List<Historique>();
                 participation.HpLeft = game.HpLeft;
                 participation.NbreSalle = game.NbreSalle;
                 if (game.Inventaire != null)
                 {
-                    foreach (var item in game.Inventaire)
-                    {
-                        itemsEnInventaire.Add(new GagnerObjet() { IdItem = item.IdItem, IdPartie = participation.IdPartie });
-                    }
+                    var itemsEnInventaire = game.Inventaire.ToArray();
 
-                    foreach (var itemInventaire in itemsEnInventaire)
+                    if (itemsEnDb.Any())
                     {
-                        if (itemsEnDb.Any())
+                        var itemsSavedCount = itemsEnDb.Count();
+                        if (itemsSavedCount < itemsEnInventaire.Count())
                         {
-                            foreach (var itemDb in itemsEnDb)
-                            {
-                                if (itemInventaire.IdItem != itemDb.IdItem)
-                                {
-                                    bdd.GagnerObjet.Add(new GagnerObjet { IdItem = itemInventaire.IdItem, IdPartie = participation.IdPartie });
-                                }
-                            }
+                            bdd.GagnerObjet.Add(new GagnerObjet() { IdItem = itemsEnInventaire[itemsSavedCount].IdItem, IdPartie = participation.IdPartie });
                         }
-                        else
-                        {
-                            bdd.GagnerObjet.Add(new GagnerObjet { IdItem = itemInventaire.IdItem, IdPartie = participation.IdPartie });
-                        } 
                     }
-                }
-                bdd.SaveChanges();
-                foreach (var salle in game.SallesParcourues)
-                {
-                    salles.Add(new Historique() { IdPartie = participation.IdPartie, IdSalle = salle.IdSalle });
-                }
-                foreach (var salle in salles)
-                {
-                    var salleExistante = salles.Find(s => s.IdSalle == salle.IdSalle);
-                    if (salleExistante == null)
+                    else
                     {
-                        bdd.Historique.Add(salle);
+                        bdd.GagnerObjet.Add(new GagnerObjet { IdItem = itemsEnInventaire[0].IdItem, IdPartie = participation.IdPartie });
                     }
+                }
+
+                bdd.SaveChanges();
+
+                var sallesParcourues = game.SallesParcourues.ToArray();
+                if (sallesEnDb.Any())
+                {
+                    var sallesSavedCount = sallesEnDb.Count();
+                    if (sallesSavedCount < sallesParcourues.Count())
+                    {
+                        bdd.Historique.Add(new Historique() { IdSalle = sallesParcourues[sallesSavedCount].IdSalle, IdPartie = participation.IdPartie });
+                    }
+                }
+                else
+                {
+                    bdd.Historique.Add(new Historique() { IdSalle = sallesParcourues[0].IdSalle, IdPartie = participation.IdPartie });
                 }
                 bdd.SaveChanges();
                 return;

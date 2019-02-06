@@ -169,6 +169,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   generateRoom(){
     this.isReady = false;
+    this.atkReady = false;
     this.newGame.nbreSalle++;
     this.gameService.saveGame(this.newGame);
     this.lootOpened = false;
