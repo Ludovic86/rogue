@@ -1,43 +1,46 @@
 <mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerVerticalCenter"></mat-spinner>
-<div *ngIf="isReady && !loggedJoueur">Vous devez être connecté pour faire une partie <a [routerLink]='["/login"]'>Se connecter</a></div>
+<div class="container">
+    <div *ngIf="isReady && !loggedJoueur">Vous devez être connecté pour faire une partie <a [routerLink]='["/login"]'>Se connecter</a></div>
 
-        <div *ngIf="partieEnCours && isReady" class="row formVerticalCenter panel panel-default">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-5">
-                        Une partie en cours a été trouvée
-                    </div>
-                </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Donjon</th>
-                            <th>Personnage</th>
-                            <th>HP restants</th>
-                            <th>Salles accomplies</th>
-                            <th>Inventaire</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{partieEnCours.nomDonjon}}</td>
-                            <td>{{partieEnCours.nomPersonnage}}</td>
-                            <td>{{partieEnCours.hpLeft}}</td>
-                            <td>{{partieEnCours.nbrSalle}}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" (click)="openModal(inventairePartieEnCours)">Items</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="row">
-                    <button type="button" class="btn btn-primary" (click)="getPartieSauvegardee()">Continuer cette partie</button>
-                    <button type="button" class="btn btn-primary" (click)="creeNouvellePartie()">Nouvelle partie</button>
-                </div>
-                <div class="row"><em>Attention, si vous commencez une nouvelle partie, celle en cours sera considérée comme terminée</em></div>
+    <div *ngIf="partieEnCours && isReady" class="row formVerticalCenter panel panel-default col-md-10 col-lg-9">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-5 col-sm-4 col-sm-offset-5">
+                Une partie en cours a été trouvée
+            </div>
         </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Donjon</th>
+                    <th>Personnage</th>
+                    <th>HP restants</th>
+                    <th>Salles accomplies</th>
+                    <th>Inventaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{partieEnCours.nomDonjon}}</td>
+                    <td>{{partieEnCours.nomPersonnage}}</td>
+                    <td>{{partieEnCours.hpLeft}}</td>
+                    <td>{{partieEnCours.nbrSalle}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="openModal(inventairePartieEnCours)">Items</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>        
+        <div *ngIf="partieEnCours && isReady" class="row">
+            <div class="col-md-10 col-md-offset-3">
+                <button type="button" class="btn btn-primary" (click)="getPartieSauvegardee()" style="margin-right: 5px">Continuer cette partie</button>
+                <button type="button" class="btn btn-primary" (click)="creeNouvellePartie()">Nouvelle partie</button>
+            </div> 
+        </div>
+        <div *ngIf="partieEnCours && isReady" class="row" style="margin-top: 10px"><em>Attention, si vous commencez une nouvelle partie, celle en cours sera considérée comme terminée</em></div>
         
-        <div *ngIf="!partieEnCours && !selectedPerso && isReady" class="row formVerticalCenter panel panel-default">
+        
+        <div *ngIf="!partieEnCours && !selectedPerso && isReady && loggedJoueur" class="row formVerticalCenter panel panel-default col-md-10 col-lg-9">
             <div class="col-md-4 col-md-offset-5">
                 Selectionnez un personnage
             </div>
@@ -71,7 +74,7 @@
             </table>
         </div>
         
-        <div *ngIf="selectedPerso && selectionDonjon && isReady" class="row formVerticalCenter panel panel-default">
+        <div *ngIf="selectedPerso && selectionDonjon && isReady" class="row formVerticalCenter panel panel-default col-md-10 col-lg-9">
             <div class="col-md-4 col-md-offset-5">
                 Selectionnez un donjon
             </div>
@@ -97,7 +100,7 @@
             </table>
         </div>
         
-        <div *ngIf="selectedPerso && selectedDonjon" class="formVerticalCenter panel panel-default">
+        <div *ngIf="selectedPerso && selectedDonjon" class="formVerticalCenter panel panel-default col-md-10 col-lg-9">
             <div class="row">
                 <div class="col-md-2 col-md-offset-5 panel panel-default text-center">
                     {{currentRoom.nomSalle}}
@@ -131,14 +134,14 @@
                     </div>
                 </div>
                 <div *ngIf="currentEnnemiHP == 0 && !lootOpened" class="row">
-                    <div class="col-md-2 col-md-offset-5">
+                    <div class="col-md-2 col-md-offset-5" style="padding-bottom: 10px">
                         <button type="button" class="btn btn-primary" (click)="openLoot()">Fouiller l'ennemi</button>
                     </div>
                 </div>
             </div>
-            <div *ngIf="!currentEnnemi && !lootOpened">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-5">
+            <div *ngIf="!currentEnnemi && !lootOpened" style="padding-bottom: 15px">
+                <div class="row" style="margin-top: 100px" style="margin-bottom: 100px">
+                    <div class="col-md-10">
                         Personne ici... vous pourriez en profiter pour jetter un oeil aux alentours
                     </div>
                 </div>
@@ -148,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row panel panel-default">
+            <div class="row panel panel-default" style="padding-top: 15px">
                 <div class="col-md-2">
                     <img [src]="potraitStringConstructor(newGame.personnage.nomPersonnage)" class="img-responsive center-block">
                 </div>
@@ -201,6 +204,8 @@
                 <button type="button" class="btn btn-primary" (click)="generateRoom()">Salle suivante</button>
             </div>
         </div>
+</div>
+
 
 <ng-template #inventaire>
         <div class="modal-header">

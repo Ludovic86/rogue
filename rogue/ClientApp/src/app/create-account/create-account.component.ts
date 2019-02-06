@@ -7,8 +7,8 @@ import { ErrorStateMatcher } from '@angular/material';
 
 export class RegistrationValidator {
   static validate(accountForm: FormGroup) {
-      let password = accountForm.controls.MotDePasse.value;
-      let repeatPassword = accountForm.controls.ConfirmPass.value;
+      const password = accountForm.controls.MotDePasse.value;
+      const repeatPassword = accountForm.controls.ConfirmPass.value;
 
       if (repeatPassword.length <= 0) {
           return null;
@@ -33,12 +33,12 @@ export class RegistrationValidator {
 export class CreateAccountComponent implements OnInit {
 
   accountForm: FormGroup;
-  Url: string = "";
-  AjoutResult: string = "";
-  
-  constructor(private http: HttpClient, 
-    @Inject('BASE_URL') baseUrl: string, 
-    private formBuilder: FormBuilder, 
+  Url = '';
+  AjoutResult = '';
+
+  constructor(private http: HttpClient,
+    @Inject('BASE_URL') baseUrl: string,
+    private formBuilder: FormBuilder,
     private router: Router) {
       this.Url = baseUrl;
       this.accountForm = this.formBuilder.group({
@@ -56,8 +56,8 @@ export class CreateAccountComponent implements OnInit {
   }
 
   checkPasswords(group: FormGroup) {
-  let pass = group.controls.password.value;
-  let confirmPass = group.controls.confirmPass.value;
+  const pass = group.controls.password.value;
+  const confirmPass = group.controls.confirmPass.value;
 
   return pass === confirmPass ? null : { notSame: true }     
   }

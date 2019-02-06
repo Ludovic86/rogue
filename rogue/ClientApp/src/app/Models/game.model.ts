@@ -1,7 +1,7 @@
 export interface Donjon{
     idDonjon?: number;
     nomDonjon?: string;
-    description?: string;
+    descriptionDonjon?: string;
 }
 
 export interface Item{
@@ -20,7 +20,7 @@ export interface Personnage{
     speedPerso: number;
     hpPerso: number;
     atkPerso: number;
-    description: string;
+    descriptionPerso: string;
 }
 
 export interface EffetItem{
@@ -81,7 +81,7 @@ export interface PartieVM{
     nomPersonnage: string;
     hpLeft: number;
     inventaire: Item[];
-    nbreSalle: number;
+    nbrSalle: number;
 }
 
 export interface Salle{

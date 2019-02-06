@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { JoueurVm } from '../models/joueurvm.model';
 import { GameService } from '../services/game.service';
@@ -9,7 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap';
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   isAuth: boolean;
   isReady: boolean = false;
@@ -20,8 +20,11 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private gameService: GameService, private modalService: BsModalService) {}
 
   ngOnInit() {
-    debugger;
     this.init();
+  }
+
+  ngOnDestroy(){
+    this.historiqueParties = undefined;
   }
 
   init(){

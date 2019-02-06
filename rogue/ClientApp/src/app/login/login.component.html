@@ -1,6 +1,6 @@
 <mat-spinner *ngIf="!isReady" class="col-md-2 col-md-offset-5 spinnerVerticalCenter"></mat-spinner>
 
-<div class="row col-md-5 col-md-offset-4" style="margin-top: 50px">
+<div class="row col-md-6 col-md-offset-4" style="margin-top: 50px">
   <p *ngIf="isAuth && isReady && loggedJoueur"><em>Vous êtes déjà connecté avec le compte {{loggedJoueur.email}}</em> <br /> <button class="btn btn-danger col-md-4 col-md-offset-3" style="margin-top: 10px" (click)="unLog()">
     Se déconnecter
   </button> </p>

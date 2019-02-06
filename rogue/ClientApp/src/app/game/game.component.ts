@@ -235,7 +235,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   timerEnnemi(){
-    debugger;
     if (this.currentEnnemiHP == 0 || this.currentEnnemi == undefined){
       return;
     }
