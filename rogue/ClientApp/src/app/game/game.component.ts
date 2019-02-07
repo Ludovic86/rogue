@@ -3,10 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { JoueurVm } from '../models/joueurvm.model';
 import { GameService } from '../services/game.service';
 import { PartieVM, Personnage, Donjon, Game, Salle, Ennemi, Item } from '../models/game.model';
-import { CollapseModule, BsModalService, BsModalRef } from 'ngx-bootstrap';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { resolve } from 'url';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-game',
@@ -140,7 +137,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.selectedPerso = this.newGame.personnage;
     this.selectedDonjon = this.newGame.donjon;
     this.calculateBonus();
-    this.generateRoom();
+    this.generateRoom(0);
     this.isReady = true;
   }
 
@@ -164,36 +161,44 @@ export class GameComponent implements OnInit, OnDestroy {
     this.newGame.donjon = this.selectedDonjon;
     this.selectionDonjon = null;
     this.newGame.hpLeft = this.newGame.personnage.hpPerso;
-    this.generateRoom();
+    this.generateRoom(0);
   }
 
-  generateRoom(){
+  generateRoom(state: number){
     this.isReady = false;
-    this.atkReady = false;
-    this.newGame.nbreSalle++;
-    this.gameService.saveGame(this.newGame);
-    this.lootOpened = false;
-    this.currentRoom = null;
-    this.currentItem = null;
-    this.currentEnnemi = null;
-    var i = Math.floor(Math.random() * this.newGame.salles.length) + 0;
-    this.currentRoom = this.newGame.salles[i];
-    this.newGame.sallesParcourues = this.newGame.sallesParcourues || [];
-    this.newGame.sallesParcourues.push(this.currentRoom);
-    this.newGame.salles = this.removeElementFromGame(i, this.newGame.salles);
-    if (this.rollFight()){
-      i = Math.floor(Math.random() * this.newGame.ennemis.length) + 0;
-      this.currentEnnemi = this.newGame.ennemis[i];
-      this.currentEnnemiHP = this.currentEnnemi.pvEnnemi;
-      this.timerPerso();
-      this.timerEnnemi();
-    }
-    if (this.rollFight()){
-      i = Math.floor(Math.random() * this.newGame.objets.length) + 0;
-      this.currentItem = this.newGame.objets[i];
-      this.newGame.objets = this.removeElementFromGame(i, this.newGame.objets);
-    }
-    this.isReady = true;
+    switch (state){
+      case 0 : {
+        this.genererSalle();
+        this.genererEnnemi();
+        this.genererItem();
+        this.isReady = true;
+        break;
+      }
+      case 1 : {
+        this.removeSalle(this.currentRoom);
+        this.newGame.sallesParcourues = this.newGame.sallesParcourues || [];
+        this.newGame.sallesParcourues.push(this.currentRoom);
+        this.newGame.nbreSalle = this.newGame.sallesParcourues.length;
+        this.gameService.saveGame(this.newGame);
+        this.atkReady = false;   
+        this.lootOpened = false;
+        this.currentRoom = null;
+        this.currentItem = null;
+        this.currentEnnemi = null;
+        this.genererSalle();
+        this.genererEnnemi();
+        this.genererItem();
+        this.isReady = true;
+        break;
+      }
+      case 2 : {
+        this.genererSalle();
+        this.genererEnnemi();
+        this.genererItem();
+        this.newGame.nbreSalle = this.newGame.sallesParcourues.length;
+        break;
+      }
+    } 
   }
 
   removeElementFromGame(element: number, list: any[]) : any[]{
@@ -204,7 +209,38 @@ export class GameComponent implements OnInit, OnDestroy {
     return list;
   }
 
-  rollFight() : boolean{
+  removeSalle (salle: Salle) : void {
+    for (let i = 0; i < this.newGame.salles.length; i++){
+      if (salle == this.newGame.salles[i]){
+        this.newGame.salles.splice(i, 1);
+      }
+    }
+  }
+
+  genererSalle() : void {
+    let i = Math.floor(Math.random() * this.newGame.salles.length) + 0;
+    this.currentRoom = this.newGame.salles[i];
+  }
+
+  genererEnnemi() : void {
+    if (this.rollFifty()){
+      let i = Math.floor(Math.random() * this.newGame.ennemis.length) + 0;
+      this.currentEnnemi = this.newGame.ennemis[i];
+      this.currentEnnemiHP = this.currentEnnemi.pvEnnemi;
+      this.timerPerso();
+      this.timerEnnemi();
+    }
+  }
+
+  genererItem() : void {
+    if (this.rollFifty()){
+      let i = Math.floor(Math.random() * this.newGame.objets.length) + 0;
+      this.currentItem = this.newGame.objets[i];
+      this.newGame.objets = this.removeElementFromGame(i, this.newGame.objets);
+    }
+  }
+
+  rollFifty() : boolean{
     var i = Math.round(Math.random());
     if (i == 0){
       return true;

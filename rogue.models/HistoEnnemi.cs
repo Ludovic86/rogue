@@ -13,9 +13,5 @@ namespace rogue.models
         public int IdEnnemi { get; set; }
         [Key, Column(Order = 2)]
         public int IdPartie { get; set; }
-
-        //public Ennemi IdEnnemiNavigation { get; set; }
-        //public Partie IdPartieNavigation { get; set; }
-        //public Salle IdSalleNavigation { get; set; }
     }
 }

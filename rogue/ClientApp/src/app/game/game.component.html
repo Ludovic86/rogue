@@ -200,8 +200,8 @@
             </div>
         </div>
         <div *ngIf="(!currentEnnemi || currentEnnemiHP == 0) && (isReady && selectedDonjon && selectedPerso)" class="row">
-            <div class="col-md-2 col-md-offset-5">
-                <button type="button" class="btn btn-primary" (click)="generateRoom()">Salle suivante</button>
+            <div class="col-md-2 col-md-offset-3">
+                <button type="button" class="btn btn-primary" (click)="generateRoom(1)">Salle suivante</button>
             </div>
         </div>
 </div>

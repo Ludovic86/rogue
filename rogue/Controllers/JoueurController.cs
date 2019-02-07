@@ -46,6 +46,7 @@ namespace rogue.Controllers
             bool auth  = HttpContext.User.Identity.IsAuthenticated;
             return auth;
         }
+
         [HttpGet]
         [Route("api/Joueur/LoggedJoueur")]
         public JoueurVM LoggedJoueur()

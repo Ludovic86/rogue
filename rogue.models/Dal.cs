@@ -278,7 +278,7 @@ namespace rogue.models
                 var listSalles = new List<Historique>();
                 participation.HpLeft = game.HpLeft;
                 participation.NbreSalle = game.NbreSalle;
-                if (game.Inventaire != null)
+                if (game.Inventaire.Count() > 0)
                 {
                     var itemsEnInventaire = game.Inventaire.ToArray();
 
@@ -298,19 +298,23 @@ namespace rogue.models
 
                 bdd.SaveChanges();
 
-                var sallesParcourues = game.SallesParcourues.ToArray();
-                if (sallesEnDb.Any())
+                if (game.SallesParcourues.Count() > 0)
                 {
-                    var sallesSavedCount = sallesEnDb.Count();
-                    if (sallesSavedCount < sallesParcourues.Count())
+                    var sallesParcourues = game.SallesParcourues.ToArray();
+                    if (sallesEnDb.Any())
                     {
-                        bdd.Historique.Add(new Historique() { IdSalle = sallesParcourues[sallesSavedCount].IdSalle, IdPartie = participation.IdPartie });
+                        var sallesSavedCount = sallesEnDb.Count();
+                        if (sallesSavedCount < sallesParcourues.Count())
+                        {
+                            bdd.Historique.Add(new Historique() { IdSalle = sallesParcourues[sallesSavedCount].IdSalle, IdPartie = participation.IdPartie });
+                        }
+                    }
+                    else
+                    {
+                        bdd.Historique.Add(new Historique() { IdSalle = sallesParcourues[0].IdSalle, IdPartie = participation.IdPartie });
                     }
                 }
-                else
-                {
-                    bdd.Historique.Add(new Historique() { IdSalle = sallesParcourues[0].IdSalle, IdPartie = participation.IdPartie });
-                }
+                
                 bdd.SaveChanges();
                 return;
             }

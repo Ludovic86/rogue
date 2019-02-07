@@ -16,7 +16,6 @@ namespace rogue.models
         IEnumerable<Personnage> GetPersoFromDb();
         IEnumerable<Donjon> GetDonjonsFromDb();
         PartieVM CreeViewModelPartieEnCours(string email);
-        //IEnumerable<Participe> TrouverParticipationParId(int id);
         void TerminePartie(string email);
         Game CreePartie();
         IEnumerable<PartieVM> GetHistoriqueParties(string email);

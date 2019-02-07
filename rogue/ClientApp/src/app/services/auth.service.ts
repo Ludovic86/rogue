@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable, OnInit } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { JoueurVm } from "../models/joueurvm.model";
 import { ActivatedRoute } from "@angular/router";
-import { Subject, Observable, observable } from "rxjs";
+import { Subject, Observable } from "rxjs";
 import { FormGroup } from "@angular/forms";
 import { Joueur } from "../models/joueur.model";
 

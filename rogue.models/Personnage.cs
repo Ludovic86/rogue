@@ -6,10 +6,6 @@ namespace rogue.models
 {
     public partial class Personnage
     {
-        //public Personnage()
-        //{
-        //    Participe = new HashSet<Participe>();
-        //}
         [Key]
         public int IdPersonnage { get; set; }
         public string NomPersonnage { get; set; }
@@ -18,7 +14,5 @@ namespace rogue.models
         public int? HpPerso { get; set; }
         public string DescriptionPerso { get; set; }
         public int? AtkPerso { get; set; }
-
-        //public ICollection<Participe> Participe { get; set; }
     }
 }
