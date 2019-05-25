@@ -77,6 +77,7 @@ namespace rogue.Controllers
         public IEnumerable<Donjon> GetDonjons()
         {
             var donjons = dal.GetDonjonsFromDb();
+            var i = 0;
             return donjons;
         }
     }
