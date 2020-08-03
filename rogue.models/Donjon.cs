@@ -11,5 +11,7 @@ namespace rogue.models
         public string NomDonjon { get; set; }
         public byte[] ImageDonjon { get; set; }
         public string DescriptionDonjon { get; set; }
+
+        public int DifficulteDonjon { get; set; }
     }
 }
